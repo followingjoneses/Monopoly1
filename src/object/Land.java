@@ -3,11 +3,11 @@ package object;
 /**
  * Created by jzl on 16/4/2.
  */
-public class Land {
+public class Land implements Visualizable{
     private static final int MAX_LEVEL = 6;
 
     private int level, price;
-    private String owner;
+    private int owner;
 
     public int getLevel() {
         return this.level;
@@ -29,11 +29,29 @@ public class Land {
         this.price = price;
     }
 
-    public String getOwner() {
+    public int getOwner() {
         return this.owner;
     }
 
-    public void setOwner(String owner) {
+    public void setOwner(int owner) {
         this.owner = owner;
+    }
+
+    @Override
+    public String toTexture() {
+        switch (this.owner) {
+            case 0:
+                return "◎";
+            case 1:
+                return "○";
+            case 2:
+                return "●";
+            case 3:
+                return "③";
+            case 4:
+                return "④";
+            default:
+                return null;
+        }
     }
 }

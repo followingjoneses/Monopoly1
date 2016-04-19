@@ -3,7 +3,7 @@ package object;
 /**
  * Created by jzl on 16/4/2.
  */
-public class Player {
+public class Player implements Visualizable{
     private int cash, deposit, houseProperty, point, location;
     private boolean isClockWise;
     private String name;
@@ -87,5 +87,10 @@ public class Player {
 
     public void setItem(int index, int number) {
         items[index] = number;
+    }
+
+    @Override
+    public String toTexture() {
+        return null;
     }
 }
