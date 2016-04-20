@@ -53,6 +53,10 @@ public class Player implements Visualizable{
         this.point = point;
     }
 
+    public void addPoint(int point) {
+        this.point += point;
+    }
+
     public int getLocation() {
         return this.location;
     }
@@ -95,6 +99,10 @@ public class Player implements Visualizable{
 
     public void setItem(int index, int number) {
         items[index] = number;
+    }
+
+    public void addItem(int index, int number) {
+        items[index] += number;
     }
 
     @Override
