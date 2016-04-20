@@ -12,6 +12,10 @@ public class NewsCentre implements Visualizable {
         news = new News();
     }
 
+    public void serve(Player[] players) {
+        this.news.serve(players);
+    }
+
     @Override
     public String toTexture() {
         return "新";

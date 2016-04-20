@@ -1,5 +1,7 @@
 package object;
 
+import java.util.ArrayList;
+
 /**
  * Created by jzl on 16/4/2.
  */
@@ -8,9 +10,11 @@ public class Player implements Visualizable{
     private boolean isClockWise;
     private String name;
     private int[] items;
+    private ArrayList<Land> lands;
 
     public Player() {
         items = new int[7];
+        lands = new ArrayList<Land>();
     }
 
     public int getCash() {
@@ -103,6 +107,10 @@ public class Player implements Visualizable{
 
     public void addItem(int index, int number) {
         items[index] += number;
+    }
+
+    public void addLand(Land land) {
+        lands.add(land);
     }
 
     @Override
