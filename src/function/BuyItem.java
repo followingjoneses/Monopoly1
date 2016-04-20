@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class BuyItem {
     private static final String WELCOME = "欢迎来到道具店\n",
         HINT = "玩家%s当前拥有点券%d,每样道具售价50点券\n",
-        AVAILABLE = "可以购买的道具有:\n1 转向卡\t2 遥控骰子\t3 路障\t4 均富卡\t5 掠夺卡\n",
+        AVAILABLE = "可以购买的道具有:\n1 转向卡\t2 遥控骰子\t3 路障\t4 均富卡\t5 查税卡\n",
         SELECTION = "请输入你要购买的道具编号,按q退出:\n",
         WARNING = "请输入符合要求的字符\n";
     private static final int PRICE = 50;
