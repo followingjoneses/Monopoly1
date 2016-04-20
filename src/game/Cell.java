@@ -1,4 +1,6 @@
-package object;
+package game;
+
+import object.Visualizable;
 
 import java.util.*;
 
@@ -24,5 +26,9 @@ public class Cell {
 
     public void addView(Visualizable view) {
         this.views.add(view);
+    }
+
+    public String toTexture() {
+        return views.stream().map(item->item.toTexture()).findFirst().orElse(null);
     }
 }

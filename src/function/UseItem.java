@@ -5,7 +5,7 @@ import game.*;
 /**
  * Created by jzl on 16/4/2.
  */
-public class Item {
+public class UseItem {
 
     public void turnAround() {
         boolean[] playersNearby = findPlayers(5, true);

@@ -15,7 +15,7 @@ public class News {
         news[4] = "每个人得到一张卡片";
     }
 
-    public static void trigger() {
+    public void trigger() {
         int option = (int)(Math.random()*5);
 
         switch (option) {

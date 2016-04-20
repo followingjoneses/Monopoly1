@@ -21,12 +21,20 @@ public class Player implements Visualizable{
         this.cash = cash;
     }
 
+    public void addCash(int cash) {
+        this.cash += cash;
+    }
+
     public int getDeposit() {
         return this.deposit;
     }
 
     public void setDeposit(int deposit) {
         this.deposit = deposit;
+    }
+
+    public void addDeposit(int deposit) {
+        this.deposit += deposit;
     }
 
     public int getHouseProperty() {
