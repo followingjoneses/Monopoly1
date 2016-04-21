@@ -1,10 +1,11 @@
-import game.Map;
+import game.*;
 
 /**
  * Created by jzl on 16/4/2.
  */
 public class Main {
     public static void main(String[] args) {
-        System.out.print(Map.map);
+        Game game = new Game();
+        game.setPlayerNames();
     }
 }

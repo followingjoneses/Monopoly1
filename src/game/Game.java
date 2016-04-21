@@ -3,19 +3,56 @@ package game;
 import object.*;
 
 import java.io.*;
+import java.util.*;
+import java.text.*;
 
 /**
  * Created by jzl on 16/4/2.
  */
 public class Game {
-//    public static Player[] players;
-//    public static int currentPlayer;
-//
-//    public static void initial(int num) {
-//        players = new Player[num];
-//        for (int i=0;i<num;i++)
-//            players[i] = new Player();
-//    }
+    private static final String NAME_INPUT = "请输入玩家%d的名字:\n";
+
+    private Player[] players;
+    private int currentPlayer;
+    private SimpleDateFormat simpleDateFormat;
+    private Calendar calendar;
+    private Date date;
+
+    public Game() {
+        players = new Player[4];
+        for (int i=0;i<players.length;i++)
+            players[i] = new Player();
+
+        simpleDateFormat = new SimpleDateFormat("yyyy年M月d日");
+        calendar = Calendar.getInstance();
+        try {
+            date = simpleDateFormat.parse("2014年1月1日");
+            calendar.setTime(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getCurrentPlayer() {
+        return this.currentPlayer;
+    }
+
+    public Calendar getCalendar() {
+        return this.calendar;
+    }
+
+    public void tomorrow() {
+        calendar.add(Calendar.DATE, 1);
+    }
+
+    public void setPlayerNames() {
+        for (int i=0;i<players.length;i++) {
+            System.out.printf(NAME_INPUT, i+1);
+            Scanner sc = new Scanner(System.in);
+            String name = sc.next();
+            players[i].setName(name);
+        }
+    }
 
     private Map buildMap() throws IOException {
         BufferedReader reader = new BufferedReader(new StringReader(Map.map));
