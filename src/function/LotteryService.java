@@ -8,7 +8,7 @@ import java.util.Random;
  */
 public class LotteryService {
     private static final String WIN = "恭喜,你中了%d元!\n",
-        NOTWIN = "很遗憾,你没有中奖";
+        NOTWIN = "很遗憾,你没有中奖\n";
 
     public void serve(Player player) {
         Random random = new Random();
