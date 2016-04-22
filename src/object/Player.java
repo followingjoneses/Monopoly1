@@ -6,15 +6,16 @@ import java.util.ArrayList;
  * Created by jzl on 16/4/2.
  */
 public class Player implements Visualizable{
-    private int cash, deposit, houseProperty, point, location;
+    private int cash, deposit, houseProperty, point, location, number;
     private boolean isClockWise;
     private String name;
     private int[] items;
     private ArrayList<Land> lands;
 
-    public Player() {
+    public Player(int number) {
         items = new int[7];
         lands = new ArrayList<Land>();
+        this.number = number;
     }
 
     public int getCash() {
@@ -115,6 +116,16 @@ public class Player implements Visualizable{
 
     @Override
     public String toTexture() {
+        switch (number) {
+            case 1:
+                return "□";
+            case 2:
+                return "■";
+            case 3:
+                return "△";
+            case 4:
+                return "☆";
+        }
         return null;
     }
 }
