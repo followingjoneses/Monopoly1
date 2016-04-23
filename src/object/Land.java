@@ -1,14 +1,23 @@
 package object;
 
+import function.LandService;
+
 /**
  * Created by jzl on 16/4/2.
  */
 public class Land implements Visualizable, Servable{
-    private static final int MAX_LEVEL = 6;
+    public static final int MAX_LEVEL = 6;
 
     private int level, price;
     private int owner = -1;
     private String name;
+    private LandService landService;
+
+    public Land() {
+        this.level = 1;
+        this.landService = new LandService();
+        this.price = 500;
+    }
 
     public int getLevel() {
         return this.level;
@@ -48,7 +57,7 @@ public class Land implements Visualizable, Servable{
 
     @Override
     public void serve(Player[] players, int currentPlayer) {
-
+        this.landService.serve(players, currentPlayer, this);
     }
 
     @Override

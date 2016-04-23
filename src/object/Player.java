@@ -53,6 +53,10 @@ public class Player implements Visualizable{
         this.houseProperty = houseProperty;
     }
 
+    public void addHouseProperty(int houseProperty) {
+        this.houseProperty += houseProperty;
+    }
+
     public int getPoint() {
         return this.point;
     }
@@ -126,6 +130,10 @@ public class Player implements Visualizable{
 
     public void addLand(Land land) {
         lands.add(land);
+    }
+
+    public ArrayList<Land> getLands() {
+        return this.lands;
     }
 
     @Override

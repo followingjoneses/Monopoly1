@@ -111,7 +111,8 @@ public class Map {
         }
     }
 
-    public void triggerEvent(Player player) {
-        
+    public void triggerEvent(Player[] players, int currentPlayer, int x, int y) {
+        Cell cell = this.getCell(x, y);
+        cell.getServing().serve(players, currentPlayer);
     }
 }
