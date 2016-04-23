@@ -10,7 +10,7 @@ public class ItemGetter implements Visualizable {
     }
 
     @Override
-    public String toTexture() {
-        return "卡";
+    public char toTexture() {
+        return '卡';
     }
 }

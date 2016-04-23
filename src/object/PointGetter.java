@@ -10,7 +10,7 @@ public class PointGetter implements Visualizable {
     }
 
     @Override
-    public String toTexture() {
-        return "券";
+    public char toTexture() {
+        return '券';
     }
 }

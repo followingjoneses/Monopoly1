@@ -17,7 +17,7 @@ public class Bank implements Visualizable{
     }
 
     @Override
-    public String toTexture() {
-        return "银";
+    public char toTexture() {
+        return '银';
     }
 }

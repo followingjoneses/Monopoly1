@@ -70,6 +70,10 @@ public class Player implements Visualizable{
         this.location = location;
     }
 
+    public int getNumber() {
+        return this.number;
+    }
+
     public boolean isClockWise() {
         return this.isClockWise;
     }
@@ -115,17 +119,17 @@ public class Player implements Visualizable{
     }
 
     @Override
-    public String toTexture() {
+    public char toTexture() {
         switch (number) {
+            case 0:
+                return '□';
             case 1:
-                return "□";
+                return '■';
             case 2:
-                return "■";
+                return '△';
             case 3:
-                return "△";
-            case 4:
-                return "☆";
+                return '☆';
         }
-        return null;
+        return 0;
     }
 }

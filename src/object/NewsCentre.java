@@ -17,7 +17,7 @@ public class NewsCentre implements Visualizable {
     }
 
     @Override
-    public String toTexture() {
-        return "新";
+    public char toTexture() {
+        return '新';
     }
 }

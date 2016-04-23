@@ -17,7 +17,7 @@ public class ItemShop implements Visualizable {
     }
 
     @Override
-    public String toTexture() {
-        return "道";
+    public char toTexture() {
+        return '道';
     }
 }

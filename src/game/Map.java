@@ -48,17 +48,35 @@ public class Map {
     public Map() {
         this.cells = new ArrayList<Cell>();
         this.curMap = new char[MAP_HEIGHT][MAP_WIDTH];
+        for (int y=1;y<MAP_HEIGHT-1;y++)
+            for (int x=1;x<MAP_WIDTH-1;x++)
+                curMap[y][x] = '\u3000';
     }
 
     public Cell getCell(int x, int y) {
-        return cells.stream().filter(
-            item -> (item.getX() == x && item.getY()==y)).findFirst().orElse(createCell(x, y));
+        Iterator<Cell> iterator = cells.iterator();
+
+        for (;iterator.hasNext();) {
+            Cell cell = iterator.next();
+            if (cell.getX() == x && cell.getY() == y)
+                return cell;
+        }
+        return null;
     }
 
-    private Cell createCell(int x, int y) {
-        Cell c = new Cell(x,y);
-        cells.add(c);
-        return c;
+    public Cell createCell(int x, int y) {
+        Cell cell = new Cell(x,y);
+        cells.add(cell);
+        return cell;
+    }
+
+    private void setCurMap(int currentPlayer) {
+        Iterator<Cell> iterator = cells.iterator();
+
+        for (;iterator.hasNext();) {
+            Cell cell = iterator.next();
+            curMap[cell.getY()][cell.getX()] = cell.getView(currentPlayer);
+        }
     }
 
     public void printInitialMap() {
@@ -76,6 +94,15 @@ public class Map {
         for (int y=0;y<MAP_HEIGHT;y++) {
             for (int x=0;x<MAP_WIDTH;x++)
                 System.out.print(INITIAL_MAP[y][x] + "　");
+            System.out.println();
+        }
+    }
+
+    public void printCurMap(int currentPlayer) {
+        setCurMap(currentPlayer);
+        for (int y=0;y<MAP_HEIGHT;y++) {
+            for (int x=0;x<MAP_WIDTH;x++)
+                System.out.print(curMap[y][x] + "　");
             System.out.println();
         }
     }

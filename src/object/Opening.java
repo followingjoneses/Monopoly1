@@ -9,7 +9,7 @@ public class Opening implements Visualizable{
     }
 
     @Override
-    public String toTexture() {
-        return "空";
+    public char toTexture() {
+        return '空';
     }
 }

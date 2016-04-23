@@ -17,11 +17,12 @@ public class Game {
     private int currentPlayer;
     private Calendar calendar;
     private Menu menu;
+    private Map map;
 
     public Game() {
         players = new Player[4];
         for (int i=0;i<players.length;i++)
-            players[i] = new Player(i+1);
+            players[i] = new Player(i);
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年M月d日");
         calendar = Calendar.getInstance();
@@ -33,6 +34,7 @@ public class Game {
         }
 
         menu = new Menu();
+        map = new Map();
     }
 
     public int getCurrentPlayer() {
@@ -57,46 +59,48 @@ public class Game {
     }
 
     public void startGame() {
-        this.menu.buildMap();
+        buildMap();
         System.out.print(GAME_START);
-        menu.printMainMenu(calendar, players, currentPlayer);
+        menu.printMainMenu(map, calendar, players, currentPlayer);
     }
 
-//    private Map buildMap() throws IOException {
-//        BufferedReader reader = new BufferedReader(new StringReader(Map.map));
-//        Map map = new Map(10, 22);
-//        for (int y=0;y<map.getHeight();y++) {
-//            char[] chars = reader.readLine().toCharArray();
-//            for(int x = 0;x <map.getWidth();x++) {
-//                if (chars[x] == ' ')
-//                    continue;
-//                Cell curCell = map.getCell(x, y);
-//                switch(chars[x]) {
-//                    case '◎':
-//                        curCell.addView(new Land());
-//                        break;
-//                    case '新':
-//                        curCell.addView(new NewsCentre());
-//                        break;
-//                    case '银':
-//                        curCell.addView(new Bank());
-//                        break;
-//                    case '道':
-//                        curCell.addView(new ItemShop());
-//                        break;
-//                    case '券':
-//                        curCell.addView(new PointGetter());
-//                        break;
-//                    case '空':
-//                        curCell.addView(new Opening());
-//                        break;
-//                    case '卡':
-//                        curCell.addView(new ItemGetter());
-//                        break;
-//                }
-//            }
-//        }
-//        return map;
-//    }
+    public void buildMap() {
+        for (int y=0;y<Map.MAP_HEIGHT;y++) {
+            for (int x=0;x<Map.MAP_WIDTH;x++) {
+                if (Map.INITIAL_MAP[y][x] == '\u3000')
+                    continue;
+                Cell curCell = this.map.createCell(x, y);
+                switch(Map.INITIAL_MAP[y][x]) {
+                    case '◎':
+                        curCell.addView(new Land());
+                        break;
+                    case '新':
+                        curCell.addView(new NewsCentre());
+                        break;
+                    case '银':
+                        curCell.addView(new Bank());
+                        break;
+                    case '道':
+                        curCell.addView(new ItemShop());
+                        break;
+                    case '券':
+                        curCell.addView(new PointGetter());
+                        break;
+                    case '空':
+                        curCell.addView(new Opening());
+                        break;
+                    case '卡':
+                        curCell.addView(new ItemGetter());
+                        break;
+                    case '彩':
+                        curCell.addView(new LotteryHouse());
+                        break;
+
+                }
+            }
+        }
+        for (int i=0;i<players.length;i++)
+            map.getCell(0, 0).addView(players[i]);
+    }
 
 }

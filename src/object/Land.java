@@ -7,7 +7,7 @@ public class Land implements Visualizable{
     private static final int MAX_LEVEL = 6;
 
     private int level, price;
-    private int owner;
+    private int owner = -1;
 
     public int getLevel() {
         return this.level;
@@ -38,20 +38,20 @@ public class Land implements Visualizable{
     }
 
     @Override
-    public String toTexture() {
+    public char toTexture() {
         switch (this.owner) {
+            case -1:
+                return '◎';
             case 0:
-                return "◎";
+                return '○';
             case 1:
-                return "○";
+                return '●';
             case 2:
-                return "●";
+                return '③';
             case 3:
-                return "③";
-            case 4:
-                return "④";
+                return '④';
             default:
-                return null;
+                return 0;
         }
     }
 }

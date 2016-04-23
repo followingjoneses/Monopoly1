@@ -17,7 +17,7 @@ public class LotteryHouse implements Visualizable{
     }
 
     @Override
-    public String toTexture() {
-        return "彩";
+    public char toTexture() {
+        return '彩';
     }
 }

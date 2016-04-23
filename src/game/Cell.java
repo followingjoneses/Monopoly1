@@ -1,6 +1,6 @@
 package game;
 
-import object.Visualizable;
+import object.*;
 
 import java.util.*;
 
@@ -28,7 +28,29 @@ public class Cell {
         this.views.add(view);
     }
 
-    public String toTexture() {
-        return views.stream().map(item->item.toTexture()).findFirst().orElse(null);
+    public void dismissView(Visualizable view) {
+        this.views.remove(view);
+    }
+
+    public char getView(int currentPlayer) {
+//        return views.stream().map(item->item.toTexture()).findFirst().orElse('　');
+        Iterator<Visualizable> iterator = views.iterator();
+        if (views.size() == 1)
+            return iterator.next().toTexture();
+
+        char value = '\u3000';
+        for (;iterator.hasNext();) {
+            Visualizable view = iterator.next();
+            if (view instanceof Player) {
+                if (((Player)view).getNumber() == currentPlayer) {
+                    //System.out.println(view.toTexture());
+                    return ((Player)view).toTexture();
+                }
+                else
+                    value = ((Player)view).toTexture();
+            }
+        }
+
+        return value;
     }
 }

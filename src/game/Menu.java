@@ -26,82 +26,44 @@ public class Menu {
         CARD_NUMBER = "请输入想使用的卡片编号,按x返回上一层:\n",
         PLAYERS_INFO = "昵称\t现金\t存款\t房产\t\n";
 
-    private Map map;
-
     public Menu() {
-        this.map = new Map();
+
     }
 
-    public void buildMap() {
-//        BufferedReader reader = new BufferedReader(new StringReader(Map.INITIAL_MAP));
-//        try {
-//            for (int y=0;y<Map.MAP_HEIGHT;y++) {
-//                char[] chars = reader.readLine().toCharArray();
-//                for(int x = 0;x <Map.MAP_WIDTH;x++) {
-//                    if (chars[x] == '　')
-//                        continue;
-//                    Cell curCell = this.map.getCell(x, y);
-//                    switch(chars[x]) {
-//                        case '◎':
-//                            curCell.addView(new Land());
-//                            break;
-//                        case '新':
-//                            curCell.addView(new NewsCentre());
-//                            break;
-//                        case '银':
-//                            curCell.addView(new Bank());
-//                            break;
-//                        case '道':
-//                            curCell.addView(new ItemShop());
-//                            break;
-//                        case '券':
-//                            curCell.addView(new PointGetter());
-//                            break;
-//                        case '空':
-//                            curCell.addView(new Opening());
-//                            break;
-//                        case '卡':
-//                            curCell.addView(new ItemGetter());
-//                            break;
-//                    }
+//    public void buildMap() {
+//        for (int y=0;y<Map.MAP_HEIGHT;y++) {
+//            for (int x=0;x<Map.MAP_WIDTH;x++) {
+//                if (Map.INITIAL_MAP[y][x] == '　')
+//                    continue;
+//                Cell curCell = this.map.getCell(x, y);
+//                switch(Map.INITIAL_MAP[y][x]) {
+//                    case '◎':
+//                        curCell.addView(new Land());
+//                        break;
+//                    case '新':
+//                        curCell.addView(new NewsCentre());
+//                        break;
+//                    case '银':
+//                        curCell.addView(new Bank());
+//                        break;
+//                    case '道':
+//                        curCell.addView(new ItemShop());
+//                        break;
+//                    case '券':
+//                        curCell.addView(new PointGetter());
+//                        break;
+//                    case '空':
+//                        curCell.addView(new Opening());
+//                        break;
+//                    case '卡':
+//                        curCell.addView(new ItemGetter());
+//                        break;
 //                }
 //            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
 //        }
-        for (int y=0;y<Map.MAP_HEIGHT;y++) {
-            for (int x=0;x<Map.MAP_WIDTH;x++) {
-                if (Map.INITIAL_MAP[y][x] == '　')
-                    continue;
-                Cell curCell = this.map.getCell(x, y);
-                switch(Map.INITIAL_MAP[y][x]) {
-                    case '◎':
-                        curCell.addView(new Land());
-                        break;
-                    case '新':
-                        curCell.addView(new NewsCentre());
-                        break;
-                    case '银':
-                        curCell.addView(new Bank());
-                        break;
-                    case '道':
-                        curCell.addView(new ItemShop());
-                        break;
-                    case '券':
-                        curCell.addView(new PointGetter());
-                        break;
-                    case '空':
-                        curCell.addView(new Opening());
-                        break;
-                    case '卡':
-                        curCell.addView(new ItemGetter());
-                        break;
-                }
-            }
-        }
-    }
+//    }
 
-    public void printMainMenu(Calendar calendar, Player[] players, int currentPlayer) {
+    public void printMainMenu(Map map, Calendar calendar, Player[] players, int currentPlayer) {
         String date = (new SimpleDateFormat("yyyy年M月d日")).format(calendar.getTime());
         System.out.println("今天是"+date);
 
@@ -113,7 +75,7 @@ public class Menu {
         try {
             int option = sc.nextInt();
             if (option >= 0 && option <=7) {
-                printSubmenu(option, players, currentPlayer);
+                printSubmenu(map, option, players, currentPlayer);
             } else
                 System.out.print(WARNING);
         } catch (InputMismatchException e) {
@@ -121,11 +83,12 @@ public class Menu {
         }
     }
 
-    private void printSubmenu(int option, Player[] players, int currentPlayer) {
+    private void printSubmenu(Map map, int option, Player[] players, int currentPlayer) {
         Player player = players[currentPlayer];
 
         switch (option) {
             case 0:
+                map.printCurMap(currentPlayer);
                 break;
             case 1:
                 map.printInitialMap();
