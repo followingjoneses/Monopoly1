@@ -1,19 +1,20 @@
 package object;
 
-import function.BuyItem;
+import function.ItemShopService;
 
 /**
  * Created by jzl on 16/4/19.
  */
-public class ItemShop implements Visualizable {
-    private BuyItem buyItem;
+public class ItemShop implements Visualizable, Servable {
+    private ItemShopService itemShopService;
 
     public ItemShop() {
-        buyItem = new BuyItem();
+        itemShopService = new ItemShopService();
     }
 
-    public void serve(Player player) {
-        this.buyItem.serve(player);
+    @Override
+    public void serve(Player[] players, int currentPlayer) {
+        this.itemShopService.serve(players, currentPlayer);
     }
 
     @Override

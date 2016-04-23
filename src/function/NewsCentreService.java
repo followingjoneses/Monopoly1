@@ -5,7 +5,7 @@ import object.Player;
 /**
  * Created by jzl on 16/4/5.
  */
-public class News {
+public class NewsCentreService {
     private static final String[] NEWS;
 
     static {
@@ -17,7 +17,7 @@ public class News {
         NEWS[4] = "每个人得到一张卡片\n";
     }
 
-    public void serve(Player[] players) {
+    public void serve(Player[] players, int currentPlayer) {
         int option = (int)(Math.random()*5);
 
         switch (option) {

@@ -10,6 +10,7 @@ import java.util.*;
 public class Cell {
     private int x, y;
     private Collection<Visualizable> views = new ArrayList<Visualizable>();
+    private Servable serving;
 
     public Cell(int x, int y) {
         this.x = x;
@@ -30,6 +31,14 @@ public class Cell {
 
     public void dismissView(Visualizable view) {
         this.views.remove(view);
+    }
+
+    public void setServing(Servable serving) {
+        this.serving = serving;
+    }
+
+    public Servable getServing() {
+        return this.serving;
     }
 
     public char getView(int currentPlayer) {

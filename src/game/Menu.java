@@ -24,7 +24,8 @@ public class Menu {
         WARNING = "请输入符合要求的字符\n",
         ITEM = "你现在拥有的道具如下:\n",
         CARD_NUMBER = "请输入想使用的卡片编号,按x返回上一层:\n",
-        PLAYERS_INFO = "昵称\t现金\t存款\t房产\t\n";
+        PLAYERS_INFO = "昵称\t现金\t存款\t房产\t\n",
+        DICE = "你掷出了%d\n";
 
     public Menu() {
 
@@ -99,6 +100,9 @@ public class Menu {
             case 5:
                 printPlayerProperties(players);
                 break;
+            case 6:
+                rollDice(map, players, currentPlayer);
+                break;
         }
     }
 
@@ -111,5 +115,15 @@ public class Menu {
         for (int i=0;i<players.length;i++)
             System.out.println(players[i].getName() + "\t" + players[i].getCash() + "\t" +
                 players[i].getDeposit() + "\t" + players[i].getHouseProperty());
+    }
+
+    private void rollDice(Map map, Player[] players, int currentPlayer) {
+        Player player = players[currentPlayer];
+        int dice = (int)(Math.random()*6) + 1;
+        System.out.printf(DICE, dice);
+        map.getCell(Map.COORDINATE[player.getLocation()][0], Map.COORDINATE[player.getLocation()][1]).dismissView(player);
+        player.addLocation(dice);
+        map.getCell(Map.COORDINATE[player.getLocation()][0], Map.COORDINATE[player.getLocation()][1]).addView(player);
+        map.printCurMap(currentPlayer);
     }
 }

@@ -1,5 +1,7 @@
 package object;
 
+import game.Map;
+
 import java.util.ArrayList;
 
 /**
@@ -16,6 +18,7 @@ public class Player implements Visualizable{
         items = new int[7];
         lands = new ArrayList<Land>();
         this.number = number;
+        isClockWise = true;
     }
 
     public int getCash() {
@@ -68,6 +71,13 @@ public class Player implements Visualizable{
 
     public void setLocation(int location) {
         this.location = location;
+    }
+
+    public void addLocation(int dice) {
+        if (isClockWise)
+            location = (location + dice) % Map.MAP_LENGTH;
+        else
+            location = (location - dice + Map.MAP_LENGTH) % Map.MAP_LENGTH;
     }
 
     public int getNumber() {

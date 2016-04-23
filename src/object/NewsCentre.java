@@ -1,19 +1,20 @@
 package object;
 
-import function.News;
+import function.NewsCentreService;
 
 /**
  * Created by jzl on 16/4/19.
  */
-public class NewsCentre implements Visualizable {
-    private News news;
+public class NewsCentre implements Visualizable, Servable {
+    private NewsCentreService newsCentreService;
 
     public NewsCentre() {
-        news = new News();
+        newsCentreService = new NewsCentreService();
     }
 
-    public void serve(Player[] players) {
-        this.news.serve(players);
+    @Override
+    public void serve(Player[] players, int currentPlayer) {
+        this.newsCentreService.serve(players, currentPlayer);
     }
 
     @Override

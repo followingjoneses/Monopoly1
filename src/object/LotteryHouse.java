@@ -1,19 +1,20 @@
 package object;
 
-import function.LotteryService;
+import function.LotteryHouseService;
 
 /**
  * Created by jzl on 16/4/20.
  */
-public class LotteryHouse implements Visualizable{
-    private LotteryService lotteryService;
+public class LotteryHouse implements Visualizable, Servable{
+    private LotteryHouseService lotteryHouseService;
 
     public LotteryHouse() {
-        lotteryService = new LotteryService();
+        lotteryHouseService = new LotteryHouseService();
     }
 
-    public void serve(Player player) {
-        this.lotteryService.serve(player);
+    @Override
+    public void serve(Player[] players, int currentPlayer) {
+        this.lotteryHouseService.serve(players, currentPlayer);
     }
 
     @Override

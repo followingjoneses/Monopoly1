@@ -6,7 +6,7 @@ import java.util.Scanner;
 /**
  * Created by jzl on 16/4/20.
  */
-public class BuyItem {
+public class ItemShopService {
     private static final String WELCOME = "欢迎来到道具店\n",
         HINT = "玩家%s当前拥有点券%d,每样道具售价50点券\n",
         AVAILABLE = "可以购买的道具有:\n1 转向卡\t2 遥控骰子\t3 路障\t4 均富卡\t5 查税卡\n",
@@ -14,7 +14,9 @@ public class BuyItem {
         WARNING = "请输入符合要求的字符\n";
     private static final int PRICE = 50;
 
-    public void serve(Player player) {
+    public void serve(Player[] players, int currentPlayer) {
+        Player player = players[currentPlayer];
+
         System.out.print(WELCOME);
 
         while (true) {

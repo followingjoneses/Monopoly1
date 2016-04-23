@@ -72,28 +72,44 @@ public class Game {
                 Cell curCell = this.map.createCell(x, y);
                 switch(Map.INITIAL_MAP[y][x]) {
                     case '◎':
-                        curCell.addView(new Land());
+                        Land land = new Land();
+                        curCell.addView(land);
+                        curCell.setServing(land);
                         break;
                     case '新':
-                        curCell.addView(new NewsCentre());
+                        NewsCentre newsCentre = new NewsCentre();
+                        curCell.addView(newsCentre);
+                        curCell.setServing(newsCentre);
                         break;
                     case '银':
-                        curCell.addView(new Bank());
+                        Bank bank = new Bank();
+                        curCell.addView(bank);
+                        curCell.setServing(bank);
                         break;
                     case '道':
-                        curCell.addView(new ItemShop());
+                        ItemShop itemShop = new ItemShop();
+                        curCell.addView(itemShop);
+                        curCell.setServing(itemShop);
                         break;
                     case '券':
-                        curCell.addView(new PointGetter());
+                        PointGetter pointGetter = new PointGetter();
+                        curCell.addView(pointGetter);
+                        curCell.setServing(pointGetter);
                         break;
                     case '空':
-                        curCell.addView(new Opening());
+                        Opening opening = new Opening();
+                        curCell.addView(opening);
+                        curCell.setServing(opening);
                         break;
                     case '卡':
-                        curCell.addView(new ItemGetter());
+                        ItemGetter itemGetter = new ItemGetter();
+                        curCell.addView(itemGetter);
+                        curCell.setServing(itemGetter);
                         break;
                     case '彩':
-                        curCell.addView(new LotteryHouse());
+                        LotteryHouse lotteryHouse = new LotteryHouse();
+                        curCell.addView(lotteryHouse);
+                        curCell.setServing(lotteryHouse);
                         break;
 
                 }

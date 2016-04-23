@@ -3,11 +3,12 @@ package object;
 /**
  * Created by jzl on 16/4/2.
  */
-public class Land implements Visualizable{
+public class Land implements Visualizable, Servable{
     private static final int MAX_LEVEL = 6;
 
     private int level, price;
     private int owner = -1;
+    private String name;
 
     public int getLevel() {
         return this.level;
@@ -35,6 +36,19 @@ public class Land implements Visualizable{
 
     public void setOwner(int owner) {
         this.owner = owner;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public void serve(Player[] players, int currentPlayer) {
+
     }
 
     @Override
