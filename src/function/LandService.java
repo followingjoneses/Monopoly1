@@ -24,10 +24,10 @@ public class LandService {
         PAY_UNSUCCESSFULLY = "缴纳失败,破产\n",
         WARNING = "请输入符合要求的字符\n";;
 
-    public void serve(Player[] players, int currentPlayer, Land land) {
+    public void serve(ArrayList<Player> players, int currentPlayer, Land land) {
         String landName = land.getName();
         int landOwner = land.getOwner();
-        Player player = players[currentPlayer];
+        Player player = players.get(currentPlayer);
         int price = land.getPrice();
 
         System.out.printf(WELCOME, landName);
@@ -70,17 +70,17 @@ public class LandService {
             } else
                 System.out.print(MAX_LEVEL);
         } else {
-            System.out.printf(HAS_OWNER, players[landOwner].getName());
+            System.out.printf(HAS_OWNER, players.get(landOwner).getName());
             System.out.printf(PAY, price);
             if (player.getCash() >= price) {
                 System.out.print(PAY_SUCCESSFULLY);
                 player.addCash(-price);
-                players[landOwner].addCash(price);
+                players.get(landOwner).addCash(price);
             } else if (player.getCash() + player.getDeposit() >= price) {
                 System.out.print(PAY_SUCCESSFULLY);
                 player.addDeposit(player.getCash() - price);
                 player.setCash(0);
-                players[landOwner].addCash(price);
+                players.get(landOwner).addCash(price);
             } else if (player.getCash() + player.getDeposit() + player.getHouseProperty() >= price) {
                 System.out.print(PAY_SUCCESSFULLY);
                 int delta = price - player.getCash() - player.getHouseProperty();

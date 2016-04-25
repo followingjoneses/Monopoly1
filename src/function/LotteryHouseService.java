@@ -1,6 +1,8 @@
 package function;
 
 import object.Player;
+
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -10,10 +12,10 @@ public class LotteryHouseService {
     private static final String WIN = "恭喜,你中了%d元!\n",
         NOTWIN = "很遗憾,你没有中奖\n";
 
-    public void serve(Player[] players, int currentPlayer) {
+    public void serve(ArrayList<Player> players, int currentPlayer) {
         Random random = new Random();
         boolean win = random.nextBoolean();
-        Player player = players[currentPlayer];
+        Player player = players.get(currentPlayer);
 
         if (win) {
             int money = (int)(Math.random()*10000);

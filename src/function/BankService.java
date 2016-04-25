@@ -1,6 +1,8 @@
 package function;
 
 import object.Player;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -13,8 +15,8 @@ public class BankService {
         AMOUNT = "请输入%s金额:\n",
         WARNING = "请输入符合要求的字符\n";
 
-    public void serve(Player[] players, int currentPlayer) {
-        Player player = players[currentPlayer];
+    public void serve(ArrayList<Player> players, int currentPlayer) {
+        Player player = players.get(currentPlayer);
 
         System.out.print(WELCOME);
         while (true) {

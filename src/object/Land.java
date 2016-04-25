@@ -2,6 +2,8 @@ package object;
 
 import function.LandService;
 
+import java.util.ArrayList;
+
 /**
  * Created by jzl on 16/4/2.
  */
@@ -13,7 +15,8 @@ public class Land implements Visualizable, Servable{
     private String name;
     private LandService landService;
 
-    public Land() {
+    public Land(String name) {
+        this.name = name;
         this.level = 1;
         this.landService = new LandService();
         this.price = 500;
@@ -56,7 +59,7 @@ public class Land implements Visualizable, Servable{
     }
 
     @Override
-    public void serve(Player[] players, int currentPlayer) {
+    public void serve(ArrayList<Player> players, int currentPlayer) {
         this.landService.serve(players, currentPlayer, this);
     }
 

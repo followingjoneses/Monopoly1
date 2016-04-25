@@ -2,6 +2,8 @@ package object;
 
 import function.BankService;
 
+import java.util.ArrayList;
+
 /**
  * Created by jzl on 16/4/5.
  */
@@ -13,7 +15,7 @@ public class Bank implements Visualizable, Servable{
     }
 
     @Override
-    public void serve(Player[] players, int currentPlayer) {
+    public void serve(ArrayList<Player> players, int currentPlayer) {
         this.bankService.serve(players, currentPlayer);
     }
 

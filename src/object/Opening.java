@@ -2,6 +2,8 @@ package object;
 
 import function.OpeningService;
 
+import java.util.ArrayList;
+
 /**
  * Created by jzl on 16/4/20.
  */
@@ -13,8 +15,8 @@ public class Opening implements Visualizable, Servable{
     }
 
     @Override
-    public void serve(Player[] players, int currentPlayer) {
-        this.openingService.serve(players, currentPlayer);
+    public void serve(ArrayList<Player> players, int currentPlayer) {
+        this.openingService.serve();
     }
 
     @Override

@@ -2,6 +2,8 @@ package function;
 
 import object.Player;
 
+import java.util.ArrayList;
+
 /**
  * Created by jzl on 16/4/5.
  */
@@ -17,7 +19,7 @@ public class NewsCentreService {
         NEWS[4] = "每个人得到一张卡片\n";
     }
 
-    public void serve(Player[] players, int currentPlayer) {
+    public void serve(ArrayList<Player> players, int currentPlayer) {
         int option = (int)(Math.random()*5);
 
         switch (option) {
@@ -37,47 +39,47 @@ public class NewsCentreService {
 
             case 2:
                 System.out.print(NEWS[2]);
-                for (int i=0;i<players.length;i++)
-                    players[i].addDeposit((int)(players[i].getDeposit()*0.1));
+                for (int i=0;i<players.size();i++)
+                    players.get(i).addDeposit((int)(players.get(i).getDeposit()*0.1));
                 break;
 
             case 3:
                 System.out.print(NEWS[3]);
-                for (int i=0;i<players.length;i++)
-                    players[i].addDeposit(-(int)(players[i].getDeposit()*0.1));
+                for (int i=0;i<players.size();i++)
+                    players.get(i).addDeposit(-(int)(players.get(i).getDeposit()*0.1));
                 break;
 
             case 4:
                 System.out.print(NEWS[4]);
-                for (int i=0;i<players.length;i++) {
+                for (int i=0;i<players.size();i++) {
                     int index = (int)(Math.random()*5);
-                    players[i].addItem(index, 1);
+                    players.get(i).addItem(index, 1);
                 }
                 break;
         }
     }
 
-    private Player getRichest(Player[] players) {
+    private Player getRichest(ArrayList<Player> players) {
         int max = 0, maxHouseProperty = 0;
-        for (int i=0;i<players.length;i++) {
-            if (players[i].getHouseProperty() > maxHouseProperty) {
-                maxHouseProperty = players[i].getHouseProperty();
+        for (int i=0;i<players.size();i++) {
+            if (players.get(i).getHouseProperty() > maxHouseProperty) {
+                maxHouseProperty = players.get(i).getHouseProperty();
                 max = i;
             }
         }
 
-        return players[max];
+        return players.get(max);
     }
 
-    private Player getPoorest(Player[] players) {
+    private Player getPoorest(ArrayList<Player> players) {
         int min = 0, minHouseProperty = Integer.MAX_VALUE;
-        for (int i=0;i<players.length;i++) {
-            if (players[i].getHouseProperty() < minHouseProperty) {
-                minHouseProperty = players[i].getHouseProperty();
+        for (int i=0;i<players.size();i++) {
+            if (players.get(i).getHouseProperty() < minHouseProperty) {
+                minHouseProperty = players.get(i).getHouseProperty();
                 min = i;
             }
         }
 
-        return players[min];
+        return players.get(min);
     }
 }

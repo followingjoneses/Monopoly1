@@ -42,7 +42,6 @@ public class Cell {
     }
 
     public char getView(int currentPlayer) {
-//        return views.stream().map(item->item.toTexture()).findFirst().orElse('　');
         Iterator<Visualizable> iterator = views.iterator();
         if (views.size() == 1)
             return iterator.next().toTexture();
@@ -51,12 +50,10 @@ public class Cell {
         for (;iterator.hasNext();) {
             Visualizable view = iterator.next();
             if (view instanceof Player) {
-                if (((Player)view).getNumber() == currentPlayer) {
-                    //System.out.println(view.toTexture());
-                    return ((Player)view).toTexture();
-                }
+                if (((Player)view).getNumber() == currentPlayer)
+                    return view.toTexture();
                 else
-                    value = ((Player)view).toTexture();
+                    value = view.toTexture();
             }
         }
 

@@ -31,50 +31,20 @@ public class Menu {
 
     }
 
-//    public void buildMap() {
-//        for (int y=0;y<Map.MAP_HEIGHT;y++) {
-//            for (int x=0;x<Map.MAP_WIDTH;x++) {
-//                if (Map.INITIAL_MAP[y][x] == '　')
-//                    continue;
-//                Cell curCell = this.map.getCell(x, y);
-//                switch(Map.INITIAL_MAP[y][x]) {
-//                    case '◎':
-//                        curCell.addView(new Land());
-//                        break;
-//                    case '新':
-//                        curCell.addView(new NewsCentre());
-//                        break;
-//                    case '银':
-//                        curCell.addView(new Bank());
-//                        break;
-//                    case '道':
-//                        curCell.addView(new ItemShop());
-//                        break;
-//                    case '券':
-//                        curCell.addView(new PointGetter());
-//                        break;
-//                    case '空':
-//                        curCell.addView(new Opening());
-//                        break;
-//                    case '卡':
-//                        curCell.addView(new ItemGetter());
-//                        break;
-//                }
-//            }
-//        }
-//    }
-
-    public void printMainMenu(Map map, Calendar calendar, Player[] players, int currentPlayer) {
+    int printMainMenu(Map map, Calendar calendar, ArrayList<Player> players, int currentPlayer) {
         String date = (new SimpleDateFormat("yyyy年M月d日")).format(calendar.getTime());
         System.out.println("今天是"+date);
 
-        String direction = players[currentPlayer].isClockWise() ? "顺时针" : "逆时针";
-        System.out.printf(CURRENT_PLAYER, players[currentPlayer].getName(), direction);
+        Player player = players.get(currentPlayer);
+
+        String direction = player.isClockWise() ? "顺时针" : "逆时针";
+        System.out.printf(CURRENT_PLAYER, player.getName(), direction);
         System.out.print(OPTION);
 
+        int option = -1;
         Scanner sc = new Scanner(System.in);
         try {
-            int option = sc.nextInt();
+            option = sc.nextInt();
             if (option >= 0 && option <=7) {
                 printSubmenu(map, option, players, currentPlayer);
             } else
@@ -82,10 +52,12 @@ public class Menu {
         } catch (InputMismatchException e) {
             System.out.print(WARNING);
         }
+
+        return option;
     }
 
-    private void printSubmenu(Map map, int option, Player[] players, int currentPlayer) {
-        Player player = players[currentPlayer];
+    private void printSubmenu(Map map, int option, ArrayList<Player> players, int currentPlayer) {
+        Player player = players.get(currentPlayer);
 
         switch (option) {
             case 0:
@@ -110,20 +82,25 @@ public class Menu {
         System.out.print(ITEM);
     }
 
-    private void printPlayerProperties(Player[] players) {
+    private void printPlayerProperties(ArrayList<Player> players) {
         System.out.print(PLAYERS_INFO);
-        for (int i=0;i<players.length;i++)
-            System.out.println(players[i].getName() + "\t" + players[i].getCash() + "\t" +
-                players[i].getDeposit() + "\t" + players[i].getHouseProperty());
+        for (int i=0;i<players.size();i++)
+            System.out.println(players.get(i).getName() + "\t" + players.get(i).getCash() + "\t" +
+                players.get(i).getDeposit() + "\t" + players.get(i).getHouseProperty());
     }
 
-    private void rollDice(Map map, Player[] players, int currentPlayer) {
-        Player player = players[currentPlayer];
+    private void rollDice(Map map, ArrayList<Player> players, int currentPlayer) {
+        Player player = players.get(currentPlayer);
         int dice = (int)(Math.random()*6) + 1;
         System.out.printf(DICE, dice);
         map.getCell(Map.COORDINATE[player.getLocation()][0], Map.COORDINATE[player.getLocation()][1]).dismissView(player);
         player.addLocation(dice);
-        map.getCell(Map.COORDINATE[player.getLocation()][0], Map.COORDINATE[player.getLocation()][1]).addView(player);
+
+        Cell curCell = map.getCell(Map.COORDINATE[player.getLocation()][0], Map.COORDINATE[player.getLocation()][1]);
+
+        curCell.addView(player);
         map.printCurMap(currentPlayer);
+
+        curCell.getServing().serve(players, currentPlayer);
     }
 }

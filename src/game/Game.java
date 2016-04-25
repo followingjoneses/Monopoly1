@@ -2,7 +2,6 @@ package game;
 
 import object.*;
 
-import java.io.*;
 import java.util.*;
 import java.text.*;
 
@@ -12,17 +11,18 @@ import java.text.*;
 public class Game {
     private static final String NAME_INPUT = "请输入玩家%d的名字:\n",
         GAME_START = "游戏开始\n";
+    private static final int MAX_PLAYER = 4;
 
-    private Player[] players;
+    private ArrayList<Player> players;
     private int currentPlayer;
     private Calendar calendar;
     private Menu menu;
     private Map map;
 
     public Game() {
-        players = new Player[4];
-        for (int i=0;i<players.length;i++)
-            players[i] = new Player(i);
+        players = new ArrayList<Player>();
+        for (int i=0;i<MAX_PLAYER;i++)
+            players.add(new Player(i));
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年M月d日");
         calendar = Calendar.getInstance();
@@ -50,21 +50,32 @@ public class Game {
     }
 
     public void setPlayerNames() {
-        for (int i=0;i<players.length;i++) {
+        for (int i=0;i<players.size();i++) {
             System.out.printf(NAME_INPUT, i+1);
             Scanner sc = new Scanner(System.in);
             String name = sc.next();
-            players[i].setName(name);
+            players.get(i).setName(name);
         }
     }
 
     public void startGame() {
         buildMap();
         System.out.print(GAME_START);
-        menu.printMainMenu(map, calendar, players, currentPlayer);
+
+        int option = -1;
+
+        while (players.size()!=1) {
+            for (int i=0;i<players.size();i++) {
+                while (option != 7 && option != 6) {
+                    option = menu.printMainMenu(map, calendar, players, currentPlayer);
+                }
+            }
+        }
     }
 
-    public void buildMap() {
+    private void buildMap() {
+        int landNameIndex = 0;
+
         for (int y=0;y<Map.MAP_HEIGHT;y++) {
             for (int x=0;x<Map.MAP_WIDTH;x++) {
                 if (Map.INITIAL_MAP[y][x] == '\u3000')
@@ -72,7 +83,7 @@ public class Game {
                 Cell curCell = this.map.createCell(x, y);
                 switch(Map.INITIAL_MAP[y][x]) {
                     case '◎':
-                        Land land = new Land();
+                        Land land = new Land(Map.LAND_NAME[landNameIndex++]);
                         curCell.addView(land);
                         curCell.setServing(land);
                         break;
@@ -115,8 +126,11 @@ public class Game {
                 }
             }
         }
-        for (int i=0;i<players.length;i++)
-            map.getCell(0, 0).addView(players[i]);
+        for (int i=0;i<players.size();i++)
+            map.getCell(0, 0).addView(players.get(i));
     }
 
+    private void nextPlayer() {
+        currentPlayer = (currentPlayer + 1) % players.size();
+    }
 }

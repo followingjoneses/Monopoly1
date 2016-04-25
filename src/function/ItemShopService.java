@@ -1,6 +1,8 @@
 package function;
 
 import object.Player;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -14,8 +16,8 @@ public class ItemShopService {
         WARNING = "请输入符合要求的字符\n";
     private static final int PRICE = 50;
 
-    public void serve(Player[] players, int currentPlayer) {
-        Player player = players[currentPlayer];
+    public void serve(ArrayList<Player> players, int currentPlayer) {
+        Player player = players.get(currentPlayer);
 
         System.out.print(WELCOME);
 

@@ -43,7 +43,12 @@ public class Map {
             {1, 9}, {0, 9}, {0, 8}, {0, 7}, {0, 6}, {0, 5}, {0, 4}, {0, 3}, {0, 2}, {0, 1}
     };
     static final String[] LAND_NAME = {
-        "摩羯座1号", "摩羯座2号", "摩羯座3号", "摩羯座4号",  "摩羯座5号", "摩羯座6号", "摩羯座7号"
+        "摩羯座1号", "摩羯座2号", "摩羯座3号", "摩羯座4号",  "摩羯座5号", "摩羯座6号", "摩羯座7号",
+        "水瓶座1号", "水瓶座2号", "水瓶座3号", "水瓶座4号",
+        "双鱼座1号", "双鱼座2号", "双鱼座3号", "双鱼座4号", "双鱼座5号",
+        "白羊座1号", "白羊座2号", "白羊座3号", "白羊座4号", "白羊座5号",
+        "金牛座1号", "金牛座2号", "金牛座3号", "金牛座4号",
+        "双子座1号", "双子座2号", "双子座3号", "双子座4号"
     };
 
     private Collection<Cell> cells;
@@ -109,10 +114,5 @@ public class Map {
                 System.out.print(curMap[y][x] + "　");
             System.out.println();
         }
-    }
-
-    public void triggerEvent(Player[] players, int currentPlayer, int x, int y) {
-        Cell cell = this.getCell(x, y);
-        cell.getServing().serve(players, currentPlayer);
     }
 }
