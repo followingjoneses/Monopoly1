@@ -1,6 +1,7 @@
 package object;
 
 import game.Map;
+import item.*;
 
 import java.util.ArrayList;
 
@@ -8,14 +9,17 @@ import java.util.ArrayList;
  * Created by jzl on 16/4/2.
  */
 public class Player implements Visualizable{
+    private static final int ITEM_NUMBER = 7;
+
     private int cash, deposit, houseProperty, point, location, number;
     private boolean isClockWise;
     private String name;
-    private int[] items;
+    private ArrayList<ArrayList<Item>> items;
     private ArrayList<Land> lands;
 
     public Player(int number) {
-        items = new int[7];
+        for (int i=0;i<ITEM_NUMBER;i++)
+            items.add(new ArrayList<Item>());
         lands = new ArrayList<Land>();
         this.number = number;
         isClockWise = true;
@@ -108,24 +112,52 @@ public class Player implements Visualizable{
         this.name = name;
     }
 
-    public int[] getItems() {
-        return this.items;
-    }
+//    public int getItem(int index) {
+//        return items[index];
+//    }
+//
+//    public void setItem(int index, int number) {
+//        items[index] = number;
+//    }
+//
 
-    public void setItems(int[] items) {
-        this.items = items;
-    }
-
-    public int getItem(int index) {
-        return items[index];
-    }
-
-    public void setItem(int index, int number) {
-        items[index] = number;
+    public void dismissItem(int index) {
+        items.get(index).remove(items.get(index).get(0));
     }
 
     public void addItem(int index, int number) {
-        items[index] += number;
+        ArrayList<Item> item = items.get(index);
+
+        switch (index) {
+            case 0:
+                for (int i=0;i<number;i++)
+                    item.add(new turnAroundCard());
+                break;
+            case 1:
+                for (int i=0;i<number;i++)
+                    item.add(new ControlDice());
+                break;
+            case 2:
+                for (int i=0;i<number;i++)
+                    item.add(new Barrier());
+                break;
+            case 3:
+                for (int i=0;i<number;i++)
+                    item.add(new DividePropertyCard());
+                break;
+            case 4:
+                for (int i=0;i<number;i++)
+                    item.add(new TaxCard());
+                break;
+            case 5:
+                for (int i=0;i<number;i++)
+                    item.add(new RedCard());
+                break;
+            case 6:
+                for (int i=0;i<number;i++)
+                    item.add(new BlackCard());
+                break;
+        }
     }
 
     public void addLand(Land land) {
