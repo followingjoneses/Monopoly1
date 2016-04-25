@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * Created by jzl on 16/4/5.
  */
 public class NewsCentreService {
+    private static final String WECLOME = "欢迎来到新闻中心\n";
     private static final String[] NEWS;
 
     static {
@@ -20,6 +21,8 @@ public class NewsCentreService {
     }
 
     public void serve(ArrayList<Player> players, int currentPlayer) {
+        System.out.print(WECLOME);
+
         int option = (int)(Math.random()*5);
 
         switch (option) {
