@@ -24,8 +24,10 @@ public class Menu {
         WARNING = "请输入符合要求的字符\n",
         ITEM = "你现在拥有的道具如下:\n",
         CARD_NUMBER = "请输入想使用的卡片编号,按x返回上一层:\n",
+        CHECK_CELL_INFO = "请输入具体步数(顺时针为正,逆时针为负):\n",
         PLAYERS_INFO = "昵称\t现金\t存款\t房产\t\n",
-        DICE = "你掷出了%d\n";
+        DICE = "你掷出了%d\n",
+        GIVE_UP = "玩家%s认输了!\n";
 
     public Menu() {
 
@@ -69,17 +71,44 @@ public class Menu {
             case 2:
 
                 break;
+            case 3:
+
+                break;
+            case 4:
+                checkCellInfo(map, players, currentPlayer);
+                break;
             case 5:
                 printPlayerProperties(players);
                 break;
             case 6:
                 rollDice(map, players, currentPlayer);
                 break;
+            case 7:
+                giveUp(players, currentPlayer);
+                break;
         }
     }
 
     private void printUseItem(Player player) {
         System.out.print(ITEM);
+    }
+
+    private void checkCellInfo(Map map, ArrayList<Player> players, int currentPlayer) {
+        Player player = players.get(currentPlayer);
+
+        System.out.print(CHECK_CELL_INFO);
+        try {
+            Scanner sc = new Scanner(System.in);
+            int step = sc.nextInt();
+            if (step >= -10 && step <= 10) {
+                int location = (player.getLocation() + step + Map.MAP_LENGTH) % Map.MAP_LENGTH;
+                Cell cell = map.getCell(Map.COORDINATE[location][0], Map.COORDINATE[location][1]);
+                cell.getServing().printCellInfo(players);
+            } else
+                System.out.print(WARNING);
+        } catch (InputMismatchException e) {
+            System.out.print(WARNING);
+        }
     }
 
     private void printPlayerProperties(ArrayList<Player> players) {
@@ -102,5 +131,13 @@ public class Menu {
         map.printCurMap(currentPlayer);
 
         curCell.getServing().serve(players, currentPlayer);
+    }
+
+    private void giveUp(ArrayList<Player> players, int currentPlayer) {
+        System.out.printf(GIVE_UP, players.get(currentPlayer).getName());
+        for (int i=0;i<players.size();i++) {
+            if (i == currentPlayer)
+                players.remove(players.get(i));
+        }
     }
 }

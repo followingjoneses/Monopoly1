@@ -7,16 +7,22 @@ import java.util.ArrayList;
 /**
  * Created by jzl on 16/4/20.
  */
-public class LotteryHouse implements Visualizable, Servable{
+public class LotteryHouse extends Serving implements Visualizable {
     private LotteryHouseService lotteryHouseService;
 
     public LotteryHouse() {
         lotteryHouseService = new LotteryHouseService();
+        this.name = "彩票点";
     }
 
     @Override
     public void serve(ArrayList<Player> players, int currentPlayer) {
         this.lotteryHouseService.serve(players, currentPlayer);
+    }
+
+    @Override
+    public void printCellInfo(ArrayList<Player> players) {
+        System.out.println(this.name);
     }
 
     @Override

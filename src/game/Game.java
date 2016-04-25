@@ -62,14 +62,14 @@ public class Game {
         buildMap();
         System.out.print(GAME_START);
 
-        int option = -1;
-
         while (players.size()!=1) {
             for (int i=0;i<players.size();i++) {
-                while (option != 7 && option != 6) {
+                int option = -1;
+                while (option != 7 && option != 6)
                     option = menu.printMainMenu(map, calendar, players, currentPlayer);
-                }
+                nextPlayer();
             }
+            tomorrow();
         }
     }
 

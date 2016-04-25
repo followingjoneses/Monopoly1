@@ -10,7 +10,7 @@ import java.util.*;
 public class Cell {
     private int x, y;
     private Collection<Visualizable> views = new ArrayList<Visualizable>();
-    private Servable serving;
+    private Serving serving;
 
     public Cell(int x, int y) {
         this.x = x;
@@ -33,11 +33,11 @@ public class Cell {
         this.views.remove(view);
     }
 
-    public void setServing(Servable serving) {
+    public void setServing(Serving serving) {
         this.serving = serving;
     }
 
-    public Servable getServing() {
+    public Serving getServing() {
         return this.serving;
     }
 

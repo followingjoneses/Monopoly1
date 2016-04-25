@@ -7,12 +7,11 @@ import java.util.ArrayList;
 /**
  * Created by jzl on 16/4/2.
  */
-public class Land implements Visualizable, Servable{
+public class Land extends Serving implements Visualizable {
     public static final int MAX_LEVEL = 6;
 
     private int level, price;
     private int owner = -1;
-    private String name;
     private LandService landService;
 
     public Land(String name) {
@@ -61,6 +60,17 @@ public class Land implements Visualizable, Servable{
     @Override
     public void serve(ArrayList<Player> players, int currentPlayer) {
         this.landService.serve(players, currentPlayer, this);
+    }
+
+    @Override
+    public void printCellInfo(ArrayList<Player> players) {
+        System.out.println(this.name);
+
+        String landOwner = (owner == -1) ? "无主" : "主人是"+ players.get(owner).getName();
+
+        System.out.println(landOwner);
+        System.out.println(level + "级");
+
     }
 
     @Override

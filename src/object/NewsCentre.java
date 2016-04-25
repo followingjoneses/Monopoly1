@@ -7,16 +7,22 @@ import java.util.ArrayList;
 /**
  * Created by jzl on 16/4/19.
  */
-public class NewsCentre implements Visualizable, Servable {
+public class NewsCentre extends Serving implements Visualizable {
     private NewsCentreService newsCentreService;
 
     public NewsCentre() {
         newsCentreService = new NewsCentreService();
+        this.name = "新闻中心";
     }
 
     @Override
     public void serve(ArrayList<Player> players, int currentPlayer) {
         this.newsCentreService.serve(players, currentPlayer);
+    }
+
+    @Override
+    public void printCellInfo(ArrayList<Player> players) {
+        System.out.println(this.name);
     }
 
     @Override
