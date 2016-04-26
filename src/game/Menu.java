@@ -3,7 +3,6 @@ package game;
 import item.Item;
 import object.*;
 
-import java.io.*;
 import java.util.*;
 import java.text.*;
 
@@ -26,7 +25,7 @@ public class Menu {
         ITEM = "你现在拥有的道具如下:\n",
         CARD_NUMBER = "请输入想使用的卡片编号,按x返回上一层:\n",
         CHECK_CELL_INFO = "请输入具体步数(顺时针为正,逆时针为负):\n",
-        HAS_BARRIER = "前方%d有路障\n",
+        HAS_BARRIER = "前方%d步有路障\n",
         NO_BARRIER = "前方10步无路障\n",
         PLAYERS_INFO = "昵称\t现金\t存款\t房产\t\n",
         DICE = "你掷出了%d\n",
@@ -44,7 +43,7 @@ public class Menu {
         ITEM_NAMES[6] = "黑卡";
     }
 
-    int printMainMenu(Map map, Calendar calendar, ArrayList<Player> players, int currentPlayer) {
+    int printMainMenu(Stock[] stocks, Map map, Calendar calendar, ArrayList<Player> players, int currentPlayer) {
         String date = (new SimpleDateFormat("yyyy年M月d日")).format(calendar.getTime());
         System.out.println("今天是"+date);
 
@@ -59,7 +58,7 @@ public class Menu {
         try {
             option = sc.nextInt();
             if (option >= 0 && option <=7) {
-                printSubmenu(map, option, players, currentPlayer);
+                printSubmenu(stocks, map, option, players, currentPlayer);
             } else
                 System.out.print(WARNING);
         } catch (InputMismatchException e) {
@@ -69,7 +68,7 @@ public class Menu {
         return option;
     }
 
-    private void printSubmenu(Map map, int option, ArrayList<Player> players, int currentPlayer) {
+    private void printSubmenu(Stock[] stocks, Map map, int option, ArrayList<Player> players, int currentPlayer) {
         Player player = players.get(currentPlayer);
 
         switch (option) {
@@ -80,7 +79,7 @@ public class Menu {
                 map.printInitialMap();
                 break;
             case 2:
-                printUseItem(players, currentPlayer);
+                printUseItem(stocks, map, players, currentPlayer);
                 break;
             case 3:
                 showBarriers(map, players, currentPlayer);
@@ -95,7 +94,7 @@ public class Menu {
                 rollDice(map, players, currentPlayer);
                 break;
             case 7:
-                giveUp(players, currentPlayer);
+                giveUp(map, players, currentPlayer);
                 break;
         }
     }
@@ -108,18 +107,17 @@ public class Menu {
         for (int i=0;i<10;i++) {
             location = (location + 1) % Map.MAP_LENGTH;
             Cell cell = map.getCell(Map.COORDINATE[location][0], Map.COORDINATE[location][1]);
-            if (cell.getServing() instanceof Land )
-                if (((Land) cell.getServing()).isHasBarrier()) {
-                    hasBarrier = true;
-                    System.out.printf(HAS_BARRIER, i + 1);
-                }
-
-            if (!hasBarrier)
-                System.out.print(NO_BARRIER);
+            if (cell.getServing().isHasBarrier()) {
+                hasBarrier = true;
+                System.out.printf(HAS_BARRIER, i + 1);
+            }
         }
+
+        if (!hasBarrier)
+            System.out.print(NO_BARRIER);
     }
 
-    private void printUseItem(ArrayList<Player> players, int currentPlayer) {
+    private void printUseItem(Stock[] stocks, Map map, ArrayList<Player> players, int currentPlayer) {
         Player player = players.get(currentPlayer);
         ArrayList<ArrayList<Item>> items = player.getItems();
 
@@ -139,9 +137,8 @@ public class Menu {
             int index = Integer.parseInt(option);
             if (index < 0 || index > 6 || player.getItems().get(index).size() == 0)
                 System.out.print(WARNING);
-            else {
-                player.getItem(index).use(players, currentPlayer);
-            }
+            else
+                player.getItem(index).use(stocks, map, players, currentPlayer);
         } catch (NumberFormatException e) {
             System.out.print(WARNING);
         }
@@ -154,7 +151,7 @@ public class Menu {
         try {
             Scanner sc = new Scanner(System.in);
             int step = sc.nextInt();
-            if (step >= -10 && step <= 10) {
+            if (step >= -Map.MAP_LENGTH && step <= Map.MAP_LENGTH) {
                 int location = (player.getLocation() + step + Map.MAP_LENGTH) % Map.MAP_LENGTH;
                 Cell cell = map.getCell(Map.COORDINATE[location][0], Map.COORDINATE[location][1]);
                 cell.getServing().printCellInfo(players);
@@ -174,7 +171,13 @@ public class Menu {
 
     private void rollDice(Map map, ArrayList<Player> players, int currentPlayer) {
         Player player = players.get(currentPlayer);
-        int dice = (int)(Math.random()*6) + 1;
+        int dice = 0;
+        if (player.getNextDice() == 0)
+            dice = (int)(Math.random()*6) + 1;
+        else {
+            dice = player.getNextDice();
+            player.setNextDice(0);
+        }
         System.out.printf(DICE, dice);
         map.getCell(Map.COORDINATE[player.getLocation()][0], Map.COORDINATE[player.getLocation()][1]).dismissView(player);
         player.addLocation(dice);
@@ -187,11 +190,19 @@ public class Menu {
         curCell.getServing().serve(players, currentPlayer);
     }
 
-    private void giveUp(ArrayList<Player> players, int currentPlayer) {
-        System.out.printf(GIVE_UP, players.get(currentPlayer).getName());
-        for (int i=0;i<players.size();i++) {
-            if (i == currentPlayer)
-                players.remove(players.get(i));
+    private void giveUp(Map map, ArrayList<Player> players, int currentPlayer) {
+        Player player = players.get(currentPlayer);
+
+        System.out.printf(GIVE_UP, player.getName());
+
+        ArrayList<Land> lands = player.getLands();
+        for (int i=0;i<lands.size();i++) {
+            lands.get(i).setOwner(-1);
+            lands.remove(lands.get(0));
         }
+        int location = player.getLocation();
+        Cell cell = map.getCell(Map.COORDINATE[location][0], Map.COORDINATE[location][1]);
+        cell.dismissView(player);
+        players.remove(player);
     }
 }

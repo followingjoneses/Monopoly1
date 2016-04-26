@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Player implements Visualizable{
     private static final int ITEM_NUMBER = 7;
 
-    private int cash, deposit, houseProperty, point, location, number;
+    private int cash, deposit, houseProperty, point, location, number, nextDice;
     private boolean isClockWise;
     private String name;
     private ArrayList<ArrayList<Item>> items;
@@ -95,6 +95,14 @@ public class Player implements Visualizable{
 
     public int getNumber() {
         return this.number;
+    }
+
+    public int getNextDice() {
+        return this.nextDice;
+    }
+
+    public void setNextDice(int nextDice) {
+        this.nextDice = nextDice;
     }
 
     public boolean isClockWise() {

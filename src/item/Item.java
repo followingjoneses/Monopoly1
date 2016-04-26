@@ -1,7 +1,7 @@
 package item;
 
 import game.Map;
-import object.Player;
+import object.*;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ public abstract class Item {
     protected int itemIndex;
     protected String name;
 
-    public void use(ArrayList<Player> players, int currentPlayer){
+    public void use(Stock[] stocks, Map map, ArrayList<Player> players, int currentPlayer){
         players.get(currentPlayer).dismissItem(this.itemIndex);
     }
 

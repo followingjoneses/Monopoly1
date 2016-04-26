@@ -22,7 +22,7 @@ public class LandService {
         PAY = "你需要缴纳%d的过路费\n",
         PAY_SUCCESSFULLY = "缴纳成功\n",
         PAY_UNSUCCESSFULLY = "缴纳失败,破产\n",
-        WARNING = "请输入符合要求的字符\n";;
+        WARNING = "请输入符合要求的字符\n";
 
     public void serve(ArrayList<Player> players, int currentPlayer, Land land) {
         String landName = land.getName();
@@ -49,7 +49,7 @@ public class LandService {
                 System.out.print(PURCHASE_UNSUCCESSFULLY);
             else
                 System.out.print(WARNING);
-        } else if (landOwner == currentPlayer) {
+        } else if (landOwner == player.getNumber()) {
             System.out.printf(HAS_OWNER, player.getName());
             if (land.getLevel() < Land.MAX_LEVEL) {
                 System.out.print(UPGRADE);

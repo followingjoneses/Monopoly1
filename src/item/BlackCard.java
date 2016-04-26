@@ -1,6 +1,8 @@
 package item;
 
+import game.Map;
 import object.Player;
+import object.Stock;
 
 import java.util.ArrayList;
 
@@ -14,5 +16,5 @@ public class BlackCard extends Item {
     }
 
     @Override
-    public void use(ArrayList<Player> players, int currentPlayer){}
+    public void use(Stock[] stocks, Map map, ArrayList<Player> players, int currentPlayer){}
 }

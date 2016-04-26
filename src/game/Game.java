@@ -11,16 +11,18 @@ import java.text.*;
 public class Game {
     private static final String NAME_INPUT = "请输入玩家%d的名字:\n",
         GAME_START = "游戏开始\n";
-    private static final int MAX_PLAYER = 4;
+    private static final int MAX_PLAYER = 4,
+        MIN_STOCK = 10;
 
     private ArrayList<Player> players;
     private int currentPlayer;
     private Calendar calendar;
     private Menu menu;
     private Map map;
+    private Stock[] stocks;
 
     public Game() {
-        players = new ArrayList<Player>();
+        players = new ArrayList<>();
         for (int i=0;i<MAX_PLAYER;i++)
             players.add(new Player(i));
 
@@ -35,6 +37,10 @@ public class Game {
 
         menu = new Menu();
         map = new Map();
+
+        stocks = new Stock[MIN_STOCK];
+        for (int i=0;i<MIN_STOCK;i++)
+            stocks[i] = new Stock();
     }
 
     public int getCurrentPlayer() {
@@ -66,8 +72,8 @@ public class Game {
             for (int i=0;i<players.size();i++) {
                 int option = -1;
                 while (option != 7 && option != 6)
-                    option = menu.printMainMenu(map, calendar, players, currentPlayer);
-                nextPlayer();
+                    option = menu.printMainMenu(stocks, map, calendar, players, currentPlayer);
+                nextPlayer(option);
             }
             tomorrow();
         }
@@ -130,7 +136,10 @@ public class Game {
             map.getCell(0, 0).addView(players.get(i));
     }
 
-    private void nextPlayer() {
-        currentPlayer = (currentPlayer + 1) % players.size();
+    private void nextPlayer(int option) {
+        if (option == 6)
+            currentPlayer = (currentPlayer + 1) % players.size();
+        else if (option == 7)
+            currentPlayer %= players.size();
     }
 }

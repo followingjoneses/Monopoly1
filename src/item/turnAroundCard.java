@@ -1,8 +1,11 @@
 package item;
 
+import game.*;
 import object.Player;
+import object.Stock;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Created by jzl on 16/4/25.
@@ -19,9 +22,7 @@ public class turnAroundCard extends Item {
     }
 
     @Override
-    public void use(ArrayList<Player> players, int currentPlayer){
-        super.use(players, currentPlayer);
-
+    public void use(Stock[] stocks, Map map, ArrayList<Player> players, int currentPlayer){
         Player[] nearby = findPlayers(players, currentPlayer, 5, true);
 
         System.out.print(NEARBY);
@@ -40,6 +41,7 @@ public class turnAroundCard extends Item {
         try {
             int index = Integer.parseInt(option);
             if (index >= 0 && index < nearby.length) {
+                super.use(stocks, map, players, currentPlayer);
                 nearby[index].changeDirection();
                 System.out.printf(USE, nearby[index].getName());
             }

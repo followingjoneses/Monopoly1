@@ -1,6 +1,8 @@
 package item;
 
+import game.Map;
 import object.Player;
+import object.Stock;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -20,9 +22,7 @@ public class TaxCard extends Item {
     }
 
     @Override
-    public void use(ArrayList<Player> players, int currentPlayer){
-        super.use(players, currentPlayer);
-
+    public void use(Stock[] stocks, Map map, ArrayList<Player> players, int currentPlayer) {
         Player[] nearby = findPlayers(players, currentPlayer, 5, true);
 
         System.out.print(NEARBY);
@@ -41,6 +41,7 @@ public class TaxCard extends Item {
         try {
             int index = Integer.parseInt(option);
             if (index >= 0 && index < nearby.length) {
+                super.use(stocks, map, players, currentPlayer);
                 nearby[index].addDeposit(-(int)(0.3 * nearby[index].getDeposit()));
                 System.out.printf(USE, nearby[index].getName());
             }
