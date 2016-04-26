@@ -26,6 +26,8 @@ public class Menu {
         ITEM = "你现在拥有的道具如下:\n",
         CARD_NUMBER = "请输入想使用的卡片编号,按x返回上一层:\n",
         CHECK_CELL_INFO = "请输入具体步数(顺时针为正,逆时针为负):\n",
+        HAS_BARRIER = "前方%d有路障\n",
+        NO_BARRIER = "前方10步无路障\n",
         PLAYERS_INFO = "昵称\t现金\t存款\t房产\t\n",
         DICE = "你掷出了%d\n",
         GIVE_UP = "玩家%s认输了!\n";
@@ -40,10 +42,6 @@ public class Menu {
         ITEM_NAMES[4] = "查税卡";
         ITEM_NAMES[5] = "红卡";
         ITEM_NAMES[6] = "黑卡";
-    }
-
-    public Menu() {
-
     }
 
     int printMainMenu(Map map, Calendar calendar, ArrayList<Player> players, int currentPlayer) {
@@ -85,7 +83,7 @@ public class Menu {
                 printUseItem(players, currentPlayer);
                 break;
             case 3:
-
+                showBarriers(map, players, currentPlayer);
                 break;
             case 4:
                 checkCellInfo(map, players, currentPlayer);
@@ -99,6 +97,25 @@ public class Menu {
             case 7:
                 giveUp(players, currentPlayer);
                 break;
+        }
+    }
+
+    private void showBarriers(Map map, ArrayList<Player> players, int currentPlayer) {
+        Player player = players.get(currentPlayer);
+        int location = player.getLocation();
+        boolean hasBarrier = false;
+
+        for (int i=0;i<10;i++) {
+            location = (location + 1) % Map.MAP_LENGTH;
+            Cell cell = map.getCell(Map.COORDINATE[location][0], Map.COORDINATE[location][1]);
+            if (cell.getServing() instanceof Land )
+                if (((Land) cell.getServing()).isHasBarrier()) {
+                    hasBarrier = true;
+                    System.out.printf(HAS_BARRIER, i + 1);
+                }
+
+            if (!hasBarrier)
+                System.out.print(NO_BARRIER);
         }
     }
 

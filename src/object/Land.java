@@ -12,6 +12,7 @@ public class Land extends Serving implements Visualizable {
 
     private int level, price;
     private int owner = -1;
+    private boolean hasBarrier;
     private LandService landService;
 
     public Land(String name) {
@@ -55,6 +56,18 @@ public class Land extends Serving implements Visualizable {
 
     public String getName() {
         return this.name;
+    }
+
+    public boolean isHasBarrier() {
+        return this.hasBarrier;
+    }
+
+    public void setBarrier() {
+        this.hasBarrier = true;
+    }
+
+    public void removeBarrier() {
+        this.hasBarrier = false;
     }
 
     @Override

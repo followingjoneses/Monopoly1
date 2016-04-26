@@ -84,19 +84,6 @@ public class UseItem {
     }
 
     private Player[] findPlayers(Player[] players, int currentPlayer, int step, boolean includeSelf) {
-//        boolean[] playersNearby = new boolean[Game.players.length];
-//        int location = Game.players[Game.currentPlayer].getLocation();
-//
-//        for (int i=0;i<playersNearby.length && i!=Game.currentPlayer;i++) {
-//            int delta = Math.abs(Game.players[i].getLocation() - location + Map.mapLength) % Map.mapLength;
-//            if (delta <= step || delta>=(Map.mapLength-step))
-//                playersNearby[i] = true;
-//        }
-//
-//        if (includeSelf)
-//            playersNearby[Game.currentPlayer] = true;
-//
-//        return playersNearby;
         int length = 0;
         boolean[] playerIsNearby = new boolean[players.length];
         int location = players[currentPlayer].getLocation();

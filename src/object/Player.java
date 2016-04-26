@@ -19,11 +19,15 @@ public class Player implements Visualizable{
 
     public Player(int number) {
         items = new ArrayList<>();
-        for (int i=0;i<ITEM_NUMBER;i++)
+        for (int i=0;i<ITEM_NUMBER;i++) {
             items.add(new ArrayList<>());
+            addItem(i, 2);
+        }
         lands = new ArrayList<>();
         this.number = number;
         isClockWise = true;
+        cash = 2000;
+
     }
 
     public int getCash() {
@@ -112,15 +116,6 @@ public class Player implements Visualizable{
     public void setName(String name) {
         this.name = name;
     }
-
-//    public int getItem(int index) {
-//        return items[index];
-//    }
-//
-//    public void setItem(int index, int number) {
-//        items[index] = number;
-//    }
-//
 
     public ArrayList<ArrayList<Item>> getItems() {
         return this.items;
