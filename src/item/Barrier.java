@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Barrier extends Item {
     public Barrier() {
         this.itemIndex = 2;
+        this.name = "路障";
     }
 
     @Override

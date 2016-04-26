@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class DividePropertyCard extends Item {
     public DividePropertyCard() {
         this.itemIndex = 3;
+        this.name = "均富卡";
     }
 
     @Override

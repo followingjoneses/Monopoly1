@@ -18,9 +18,10 @@ public class Player implements Visualizable{
     private ArrayList<Land> lands;
 
     public Player(int number) {
+        items = new ArrayList<>();
         for (int i=0;i<ITEM_NUMBER;i++)
-            items.add(new ArrayList<Item>());
-        lands = new ArrayList<Land>();
+            items.add(new ArrayList<>());
+        lands = new ArrayList<>();
         this.number = number;
         isClockWise = true;
     }
@@ -120,6 +121,14 @@ public class Player implements Visualizable{
 //        items[index] = number;
 //    }
 //
+
+    public ArrayList<ArrayList<Item>> getItems() {
+        return this.items;
+    }
+
+    public Item getItem(int index) {
+        return items.get(index).get(0);
+    }
 
     public void dismissItem(int index) {
         items.get(index).remove(items.get(index).get(0));

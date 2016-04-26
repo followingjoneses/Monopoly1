@@ -9,6 +9,15 @@ import java.util.ArrayList;
  */
 public abstract class Item {
     protected int itemIndex;
+    protected String name;
 
     public void use(ArrayList<Player> players, int currentPlayer){}
+
+    public int getItemIndex() {
+        return this.itemIndex;
+    }
+
+    public String getName() {
+        return this.name;
+    }
 }

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class RedCard extends Item {
     public RedCard() {
         this.itemIndex = 5;
+        this.name = "红卡";
     }
 
     @Override

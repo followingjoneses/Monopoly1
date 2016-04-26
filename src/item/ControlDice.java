@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class ControlDice extends Item{
     public ControlDice() {
         this.itemIndex = 1;
+        this.name = "遥控骰子";
     }
 
     @Override

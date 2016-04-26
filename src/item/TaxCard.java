@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class TaxCard extends Item {
     public TaxCard() {
         this.itemIndex = 4;
+        this.name = "查税卡";
     }
 
     @Override

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class turnAroundCard extends Item {
     public turnAroundCard() {
         this.itemIndex = 0;
+        this.name = "转向卡";
     }
 
     @Override

@@ -1,5 +1,6 @@
 package game;
 
+import item.Item;
 import object.*;
 
 import java.io.*;
@@ -28,6 +29,18 @@ public class Menu {
         PLAYERS_INFO = "昵称\t现金\t存款\t房产\t\n",
         DICE = "你掷出了%d\n",
         GIVE_UP = "玩家%s认输了!\n";
+    private static final String[] ITEM_NAMES;
+
+    static {
+        ITEM_NAMES = new String[7];
+        ITEM_NAMES[0] = "转向卡";
+        ITEM_NAMES[1] = "遥控骰子";
+        ITEM_NAMES[2] = "路障";
+        ITEM_NAMES[3] = "均富卡";
+        ITEM_NAMES[4] = "查税卡";
+        ITEM_NAMES[5] = "红卡";
+        ITEM_NAMES[6] = "黑卡";
+    }
 
     public Menu() {
 
@@ -69,7 +82,7 @@ public class Menu {
                 map.printInitialMap();
                 break;
             case 2:
-
+                printUseItem(players, currentPlayer);
                 break;
             case 3:
 
@@ -89,8 +102,32 @@ public class Menu {
         }
     }
 
-    private void printUseItem(Player player) {
+    private void printUseItem(ArrayList<Player> players, int currentPlayer) {
+        Player player = players.get(currentPlayer);
+        ArrayList<ArrayList<Item>> items = player.getItems();
+
         System.out.print(ITEM);
+
+        for (int i=0;i<items.size();i++)
+            System.out.println(i + " " + ITEM_NAMES[i] + "×" + items.get(i).size());
+
+        System.out.print(CARD_NUMBER);
+        Scanner sc = new Scanner(System.in);
+        String option = sc.next();
+
+        if (option.equals("x"))
+            return;
+
+        try {
+            int index = Integer.parseInt(option);
+            if (index < 0 || index > 6 || player.getItems().get(index).size() == 0)
+                System.out.print(WARNING);
+            else {
+                player.getItem(index).use(players, currentPlayer);
+            }
+        } catch (NumberFormatException e) {
+            System.out.print(WARNING);
+        }
     }
 
     private void checkCellInfo(Map map, ArrayList<Player> players, int currentPlayer) {
