@@ -11,11 +11,12 @@ import java.util.ArrayList;
 public class Land extends Serving implements Visualizable {
     public static final int MAX_LEVEL = 6;
 
-    private int level, price;
+    private int level, price, street;
     private int owner = -1;
     private LandService landService;
 
-    public Land(String name) {
+    public Land(int street, String name) {
+        this.street = street;
         this.name = name;
         this.level = 1;
         this.landService = new LandService();
@@ -40,6 +41,10 @@ public class Land extends Serving implements Visualizable {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getStreet() {
+        return this.street;
     }
 
     public int getOwner() {

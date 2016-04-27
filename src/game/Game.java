@@ -85,7 +85,7 @@ public class Game {
     }
 
     private void buildMap() {
-        int landNameIndex = 0;
+        int landNameRow = 0, landNameColumn = 0;
 
         for (int y=0;y<Map.MAP_HEIGHT;y++) {
             for (int x=0;x<Map.MAP_WIDTH;x++) {
@@ -94,7 +94,11 @@ public class Game {
                 Cell curCell = this.map.createCell(x, y);
                 switch(Map.INITIAL_MAP[y][x]) {
                     case '◎':
-                        Land land = new Land(Map.LAND_NAME[landNameIndex++]);
+                        if (landNameColumn == Map.LAND_NAME[landNameRow].length) {
+                            landNameColumn = 0;
+                            landNameRow++;
+                        }
+                        Land land = new Land(landNameRow, Map.LAND_NAME[landNameRow][landNameColumn++]);
                         curCell.addView(land);
                         curCell.setServing(land);
                         break;

@@ -32,6 +32,7 @@ public class Menu {
         DICE = "你掷出了%d\n",
         TRAPPED = "你碰到了路障!\n",
         GIVE_UP = "玩家%s认输了!\n",
+        MARKET_CLOSE = "今天是周末,股市休市\n",
         STOCK = "编号\t名称\t\t单股价格\t涨幅/跌幅\n",
         YOUR_STOCK = "编号\t名称\t\t单股价格\t涨幅/跌幅\t股数\n",
         BUY_OR_SELL = "你想要买还是卖股票,按y买,按n卖,按x返回上一层:\n",
@@ -70,7 +71,7 @@ public class Menu {
         try {
             option = sc.nextInt();
             if (option >= 0 && option <=8) {
-                printSubmenu(stocks, map, option, players, currentPlayer);
+                printSubmenu(calendar, stocks, map, option, players, currentPlayer);
             } else
                 System.out.print(WARNING);
         } catch (InputMismatchException e) {
@@ -80,7 +81,7 @@ public class Menu {
         return option;
     }
 
-    private void printSubmenu(Stock[] stocks, Map map, int option, ArrayList<Player> players, int currentPlayer) {
+    private void printSubmenu(Calendar calendar, Stock[] stocks, Map map, int option, ArrayList<Player> players, int currentPlayer) {
         Player player = players.get(currentPlayer);
 
         switch (option) {
@@ -109,7 +110,7 @@ public class Menu {
                 giveUp(map, players, currentPlayer);
                 break;
             case 8:
-                tradeStock(stocks, players, currentPlayer);
+                tradeStock(calendar, stocks, players, currentPlayer);
                 break;
         }
     }
@@ -233,7 +234,12 @@ public class Menu {
         players.remove(player);
     }
 
-    private void tradeStock(Stock[] stocks, ArrayList<Player> players, int currentPlayer) {
+    private void tradeStock(Calendar calendar, Stock[] stocks, ArrayList<Player> players, int currentPlayer) {
+        if (calendar.get(Calendar.DAY_OF_WEEK)  == Calendar.SATURDAY || calendar.get(Calendar.DAY_OF_WEEK)  == Calendar.SUNDAY) {
+            System.out.print(MARKET_CLOSE);
+            return;
+        }
+
         Player player = players.get(currentPlayer);
 
         System.out.print(STOCK);

@@ -31,6 +31,7 @@ public class LandService {
         int landOwner = land.getOwner();
         Player player = players.get(currentPlayer);
         int price = land.getPrice();
+        int level = land.getLevel();
 
         System.out.printf(WELCOME, landName);
         if (landOwner == -1) {
@@ -72,20 +73,29 @@ public class LandService {
             } else
                 System.out.print(MAX_LEVEL);
         } else {
-            System.out.printf(HAS_OWNER, players.get(landOwner).getName());
-            System.out.printf(PAY, price);
-            if (player.getCash() >= price) {
+            Player owner = null;
+            for (int i=0;i<players.size();i++)
+                if (players.get(i).getNumber() == landOwner)
+                    owner = players.get(i);
+
+            System.out.printf(HAS_OWNER, owner.getName());
+            int fee = (int)(price * level * 0.3);
+            for (int i=0;i<owner.getLands().size();i++)
+                if (land != owner.getLands().get(i) && land.getStreet() == owner.getLands().get(i).getStreet())
+                    fee += (int)(owner.getLands().get(i).getPrice() * owner.getLands().get(i).getLevel() * 0.1);
+            System.out.printf(PAY, fee);
+            if (player.getCash() >= fee) {
                 System.out.print(PAY_SUCCESSFULLY);
-                player.addCash(-price);
-                players.get(landOwner).addCash(price);
-            } else if (player.getCash() + player.getDeposit() >= price) {
+                player.addCash(-fee);
+                owner.addCash(fee);
+            } else if (player.getCash() + player.getDeposit() >= fee) {
                 System.out.print(PAY_SUCCESSFULLY);
-                player.addDeposit(player.getCash() - price);
+                player.addDeposit(player.getCash() - fee);
                 player.setCash(0);
-                players.get(landOwner).addCash(price);
-            } else if (player.getCash() + player.getDeposit() + player.getHouseProperty() >= price) {
+                owner.addCash(fee);
+            } else if (player.getCash() + player.getDeposit() + player.getHouseProperty() >= fee) {
                 System.out.print(PAY_SUCCESSFULLY);
-                int delta = price - player.getCash() - player.getHouseProperty();
+                int delta = fee - player.getCash() - player.getHouseProperty();
                 for (int i=0;i<player.getLands().size();i++) {
                     Land tempLand = player.getLands().get(0);
                     if (tempLand.getLevel()*tempLand.getPrice()>=delta) {
@@ -102,6 +112,7 @@ public class LandService {
                         tempLand.setLevel(1);
                     }
                 }
+                owner.addCash(fee);
             } else {
                 System.out.printf(PAY_UNSUCCESSFULLY, player.getName());
                 int location = player.getLocation();
