@@ -42,7 +42,8 @@ public class Menu {
         BUY_SUCCESSFULLY = "购买成功\n",
         NO_CASH = "现金不足\n",
         SELL_SUCCESSFULLY = "售出成功",
-        NO_STOCK = "没那么多股\n";
+        NO_STOCK = "没那么多股\n",
+        END_OF_MONTH = "今天是月末,银行发放利息\n";
     private static final String[] ITEM_NAMES;
 
     static {
@@ -59,6 +60,12 @@ public class Menu {
     int printMainMenu(Stock[] stocks, Map map, Calendar calendar, ArrayList<Player> players, int currentPlayer) {
         String date = (new SimpleDateFormat("yyyy年M月d日")).format(calendar.getTime());
         System.out.println("今天是"+date);
+
+        if (calendar.get(Calendar.DATE)==calendar.getActualMaximum(Calendar.DAY_OF_MONTH)) {
+            System.out.print(END_OF_MONTH);
+            for (int i=0;i<players.size();i++)
+                players.get(i).addDeposit((int)(0.1 * players.get(i).getDeposit()));
+        }
 
         Player player = players.get(currentPlayer);
 
