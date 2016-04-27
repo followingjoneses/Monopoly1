@@ -63,10 +63,10 @@ public class NewsCentreService {
     }
 
     private Player getRichest(ArrayList<Player> players) {
-        int max = 0, maxHouseProperty = 0;
+        int max = 0, maxLand = 0;
         for (int i=0;i<players.size();i++) {
-            if (players.get(i).getHouseProperty() > maxHouseProperty) {
-                maxHouseProperty = players.get(i).getHouseProperty();
+            if (players.get(i).getLands().size() > maxLand) {
+                maxLand = players.get(i).getHouseProperty();
                 max = i;
             }
         }
@@ -75,10 +75,10 @@ public class NewsCentreService {
     }
 
     private Player getPoorest(ArrayList<Player> players) {
-        int min = 0, minHouseProperty = Integer.MAX_VALUE;
+        int min = 0, minLand = Integer.MAX_VALUE;
         for (int i=0;i<players.size();i++) {
-            if (players.get(i).getHouseProperty() < minHouseProperty) {
-                minHouseProperty = players.get(i).getHouseProperty();
+            if (players.get(i).getHouseProperty() < minLand) {
+                minLand = players.get(i).getHouseProperty();
                 min = i;
             }
         }
