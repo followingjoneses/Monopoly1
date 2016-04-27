@@ -42,22 +42,20 @@ public class NewsCentreService {
 
             case 2:
                 System.out.print(NEWS[2]);
-                for (int i=0;i<players.size();i++)
-                    players.get(i).addDeposit((int)(players.get(i).getDeposit()*0.1));
+                players.forEach(player -> player.addDeposit((int)(player.getDeposit()*0.1)));
                 break;
 
             case 3:
                 System.out.print(NEWS[3]);
-                for (int i=0;i<players.size();i++)
-                    players.get(i).addDeposit(-(int)(players.get(i).getDeposit()*0.1));
+                players.forEach(player -> player.addDeposit(-(int)(player.getDeposit()*0.1)));
                 break;
 
             case 4:
                 System.out.print(NEWS[4]);
-                for (int i=0;i<players.size();i++) {
+                players.forEach(player -> {
                     int index = (int)(Math.random()*5);
-                    players.get(i).addItem(index, 1);
-                }
+                    player.addItem(index, 1);
+                });
                 break;
         }
     }

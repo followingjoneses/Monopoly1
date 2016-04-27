@@ -63,8 +63,7 @@ public class Menu {
 
         if (calendar.get(Calendar.DATE)==calendar.getActualMaximum(Calendar.DAY_OF_MONTH)) {
             System.out.print(END_OF_MONTH);
-            for (int i=0;i<players.size();i++)
-                players.get(i).addDeposit((int)(0.1 * players.get(i).getDeposit()));
+            players.forEach(player -> player.addDeposit((int)(0.1 * player.getDeposit())));
         }
 
         Player player = players.get(currentPlayer);
@@ -187,9 +186,10 @@ public class Menu {
 
     private void printPlayerProperties(ArrayList<Player> players) {
         System.out.print(PLAYERS_INFO);
-        for (int i=0;i<players.size();i++)
-            System.out.println(players.get(i).getName() + "\t" + players.get(i).getCash() + "\t" +
-                players.get(i).getDeposit() + "\t" + players.get(i).getHouseProperty());
+        players.forEach(player -> {
+            System.out.println(player.getName() + "\t" + player.getCash() + "\t" +
+                    player.getDeposit() + "\t" + player.getHouseProperty());
+        });
     }
 
     private void rollDice(Map map, ArrayList<Player> players, int currentPlayer) {
