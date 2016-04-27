@@ -20,6 +20,7 @@ public class Menu {
                 "5 - 查看玩家的资产信息\n"+
                 "6 - 扔骰子\n"+
                 "7 - 认输\n"+
+                "8 - 股票\n"+
                 "请选择:\n",
         WARNING = "请输入符合要求的字符\n",
         ITEM = "你现在拥有的道具如下:\n",
@@ -29,7 +30,11 @@ public class Menu {
         NO_BARRIER = "前方10步无路障\n",
         PLAYERS_INFO = "昵称\t现金\t存款\t房产\t\n",
         DICE = "你掷出了%d\n",
-        GIVE_UP = "玩家%s认输了!\n";
+        GIVE_UP = "玩家%s认输了!\n",
+        STOCK = "编号\t名称\t\t单股价格\t涨幅/跌幅\n",
+        BUY_STOCK = "请选择你想要买的股票编号,按x返回上一层:\n",
+        STOCK_NUMBER = "你想买多少股:\n",
+        NO_CASH = "现金不足\n";
     private static final String[] ITEM_NAMES;
 
     static {
@@ -57,7 +62,7 @@ public class Menu {
         Scanner sc = new Scanner(System.in);
         try {
             option = sc.nextInt();
-            if (option >= 0 && option <=7) {
+            if (option >= 0 && option <=8) {
                 printSubmenu(stocks, map, option, players, currentPlayer);
             } else
                 System.out.print(WARNING);
@@ -95,6 +100,9 @@ public class Menu {
                 break;
             case 7:
                 giveUp(map, players, currentPlayer);
+                break;
+            case 8:
+                buyStock(stocks, players, currentPlayer);
                 break;
         }
     }
@@ -171,7 +179,7 @@ public class Menu {
 
     private void rollDice(Map map, ArrayList<Player> players, int currentPlayer) {
         Player player = players.get(currentPlayer);
-        int dice = 0;
+        int dice;
         if (player.getNextDice() == 0)
             dice = (int)(Math.random()*6) + 1;
         else {
@@ -204,5 +212,39 @@ public class Menu {
         Cell cell = map.getCell(Map.COORDINATE[location][0], Map.COORDINATE[location][1]);
         cell.dismissView(player);
         players.remove(player);
+    }
+
+    private void buyStock(Stock[] stocks, ArrayList<Player> players, int currentPlayer) {
+        Player player = players.get(currentPlayer);
+
+        System.out.print(STOCK);
+        for (int i=0;i<stocks.length;i++)
+            System.out.println(i + " \t" + stocks[i].getName() + "\t" +
+                stocks[i].getPrice() + "\t" + stocks[i].getRate());
+        System.out.print(BUY_STOCK);
+        Scanner sc = new Scanner(System.in);
+        String option = sc.next();
+
+        if (option.equals("x"))
+            return;
+
+        try {
+            int index = Integer.parseInt(option);
+            if (index >=0 && index < stocks.length) {
+                System.out.print(STOCK_NUMBER);
+                sc = new Scanner(System.in);
+                int number = sc.nextInt();
+                if (number >= 0) {
+                    if (player.getCash() >= number * stocks[index].getPrice()) {
+
+                    } else
+                        System.out.print(NO_CASH);
+                } else
+                    System.out.print(WARNING);
+            } else
+                System.out.print(WARNING);
+        } catch (NumberFormatException e) {
+            System.out.print(WARNING);
+        }
     }
 }

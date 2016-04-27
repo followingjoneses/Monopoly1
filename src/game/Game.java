@@ -13,6 +13,9 @@ public class Game {
         GAME_START = "游戏开始\n";
     private static final int MAX_PLAYER = 4,
         MIN_STOCK = 10;
+    private static final String[] STOCK_NAME =
+            {"Nike", "Oracle", "Apple", "Citi", "Fort",
+                    "Boeing", "Toyota", "Intel", "Yahoo", "Cisco"};
 
     private ArrayList<Player> players;
     private int currentPlayer;
@@ -40,7 +43,7 @@ public class Game {
 
         stocks = new Stock[MIN_STOCK];
         for (int i=0;i<MIN_STOCK;i++)
-            stocks[i] = new Stock();
+            stocks[i] = new Stock(STOCK_NAME[i], i);
     }
 
     public int getCurrentPlayer() {
@@ -53,6 +56,8 @@ public class Game {
 
     public void tomorrow() {
         calendar.add(Calendar.DATE, 1);
+        for (int i=0;i<stocks.length;i++)
+            stocks[i].tomorrow();
     }
 
     public void setPlayerNames() {
