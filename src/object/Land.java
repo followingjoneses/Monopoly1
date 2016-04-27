@@ -83,11 +83,11 @@ public class Land extends Serving implements Visualizable {
     public char toTexture() {
         switch (this.owner) {
             case -1:
-                return '◎';
+                return '〇';
             case 0:
-                return '○';
+                return '①';
             case 1:
-                return '●';
+                return '②';
             case 2:
                 return '③';
             case 3:

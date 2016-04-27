@@ -193,13 +193,13 @@ public class Player implements Visualizable{
     public char toTexture() {
         switch (number) {
             case 0:
-                return '□';
+                return '⑴';
             case 1:
-                return '■';
+                return '⑵';
             case 2:
-                return '△';
+                return '⑶';
             case 3:
-                return '☆';
+                return '⑷';
         }
         return 0;
     }
