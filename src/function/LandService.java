@@ -1,8 +1,10 @@
 package function;
 
+import game.*;
 import object.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Created by jzl on 16/4/23.
@@ -21,10 +23,10 @@ public class LandService {
         UPGRADE_UNSUCCESSFULLY = "未升级\n",
         PAY = "你需要缴纳%d的过路费\n",
         PAY_SUCCESSFULLY = "缴纳成功\n",
-        PAY_UNSUCCESSFULLY = "缴纳失败,破产\n",
+        PAY_UNSUCCESSFULLY = "缴纳失败,玩家%s破产\n",
         WARNING = "请输入符合要求的字符\n";
 
-    public void serve(ArrayList<Player> players, int currentPlayer, Land land) {
+    public void serve(ArrayList<Player> players, int currentPlayer, Land land, Map map) {
         String landName = land.getName();
         int landOwner = land.getOwner();
         Player player = players.get(currentPlayer);
@@ -85,13 +87,28 @@ public class LandService {
                 System.out.print(PAY_SUCCESSFULLY);
                 int delta = price - player.getCash() - player.getHouseProperty();
                 for (int i=0;i<player.getLands().size();i++) {
-                    Land tmpLand = player.getLands().get(i);
-                    if (tmpLand.getLevel()*tmpLand.getPrice()>=delta) {
-                        
+                    Land tempLand = player.getLands().get(0);
+                    if (tempLand.getLevel()*tempLand.getPrice()>=delta) {
+                        int cash = tempLand.getLevel()*tempLand.getPrice() - delta;
+                        player.addCash(cash);
+                        player.getLands().remove(tempLand);
+                        tempLand.setOwner(-1);
+                        tempLand.setLevel(1);
+                        break;
+                    } else {
+                        delta -= tempLand.getLevel()*tempLand.getPrice();
+                        player.getLands().remove(tempLand);
+                        tempLand.setOwner(-1);
+                        tempLand.setLevel(1);
                     }
                 }
-            } else
-                System.out.print(PAY_UNSUCCESSFULLY);
+            } else {
+                System.out.printf(PAY_UNSUCCESSFULLY, player.getName());
+                int location = player.getLocation();
+                Cell cell = map.getCell(game.Map.COORDINATE[location][0], game.Map.COORDINATE[location][1]);
+                cell.dismissView(player);
+                players.remove(player);
+            }
         }
     }
 }

@@ -89,17 +89,6 @@ public class Map {
     }
 
     public void printInitialMap() {
-//        BufferedReader reader = new BufferedReader(new StringReader(INITIAL_MAP));
-//        try {
-//            for (int y=0;y<MAP_HEIGHT;y++) {
-//                char[] chars = reader.readLine().toCharArray();
-//                for (int x=0;x<MAP_WIDTH;x++)
-//                    System.out.print(chars[x] + "\u3000");
-//                System.out.println();
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
         for (int y=0;y<MAP_HEIGHT;y++) {
             for (int x=0;x<MAP_WIDTH;x++)
                 System.out.print(INITIAL_MAP[y][x] + "　");

@@ -1,6 +1,7 @@
 package object;
 
 import function.PointGetterService;
+import game.Map;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class PointGetter extends Serving implements Visualizable {
     }
 
     @Override
-    public void serve(ArrayList<Player> players, int currentPlayer) {
+    public void serve(ArrayList<Player> players, int currentPlayer, Map map) {
         this.pointGetterService.serve(players, currentPlayer);
     }
 

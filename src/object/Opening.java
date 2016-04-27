@@ -1,6 +1,7 @@
 package object;
 
 import function.OpeningService;
+import game.Map;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class Opening extends Serving implements Visualizable {
     }
 
     @Override
-    public void serve(ArrayList<Player> players, int currentPlayer) {
+    public void serve(ArrayList<Player> players, int currentPlayer, Map map) {
         this.openingService.serve();
     }
 

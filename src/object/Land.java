@@ -1,6 +1,7 @@
 package object;
 
 import function.LandService;
+import game.Map;
 
 import java.util.ArrayList;
 
@@ -58,8 +59,8 @@ public class Land extends Serving implements Visualizable {
     }
 
     @Override
-    public void serve(ArrayList<Player> players, int currentPlayer) {
-        this.landService.serve(players, currentPlayer, this);
+    public void serve(ArrayList<Player> players, int currentPlayer, Map map) {
+        this.landService.serve(players, currentPlayer, this, map);
     }
 
     @Override

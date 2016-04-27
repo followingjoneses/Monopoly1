@@ -201,7 +201,7 @@ public class Menu {
         curCell.addView(player);
         map.printCurMap(currentPlayer);
 
-        curCell.getServing().serve(players, currentPlayer);
+        curCell.getServing().serve(players, currentPlayer, map);
     }
 
     private void giveUp(Map map, ArrayList<Player> players, int currentPlayer) {

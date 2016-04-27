@@ -1,5 +1,7 @@
 package object;
 
+import game.Map;
+
 import java.util.ArrayList;
 
 /**
@@ -9,7 +11,7 @@ public abstract class Serving {
     protected String name;
     protected boolean hasBarrier;
 
-    public void serve(ArrayList<Player> players, int currentPlayer){}
+    public void serve(ArrayList<Player> players, int currentPlayer, Map map){}
 
     public void printCellInfo(ArrayList<Player> players){}
 
