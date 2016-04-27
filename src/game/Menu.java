@@ -32,9 +32,15 @@ public class Menu {
         DICE = "你掷出了%d\n",
         GIVE_UP = "玩家%s认输了!\n",
         STOCK = "编号\t名称\t\t单股价格\t涨幅/跌幅\n",
+        YOUR_STOCK = "编号\t名称\t\t单股价格\t涨幅/跌幅\t股数\n",
+        BUY_OR_SELL = "你想要买还是卖股票,按y买,按n卖,按x返回上一层:\n",
         BUY_STOCK = "请选择你想要买的股票编号,按x返回上一层:\n",
-        STOCK_NUMBER = "你想买多少股:\n",
-        NO_CASH = "现金不足\n";
+        STOCK_NUMBER = "你想%s多少股:\n",
+        SELL_STOCK = "请选择你想要卖的股票编号,按x返回上一层:\n",
+        BUY_SUCCESSFULLY = "购买成功\n",
+        NO_CASH = "现金不足\n",
+        SELL_SUCCESSFULLY = "售出成功",
+        NO_STOCK = "没那么多股\n";
     private static final String[] ITEM_NAMES;
 
     static {
@@ -102,7 +108,7 @@ public class Menu {
                 giveUp(map, players, currentPlayer);
                 break;
             case 8:
-                buyStock(stocks, players, currentPlayer);
+                tradeStock(stocks, players, currentPlayer);
                 break;
         }
     }
@@ -214,37 +220,86 @@ public class Menu {
         players.remove(player);
     }
 
-    private void buyStock(Stock[] stocks, ArrayList<Player> players, int currentPlayer) {
+    private void tradeStock(Stock[] stocks, ArrayList<Player> players, int currentPlayer) {
         Player player = players.get(currentPlayer);
 
         System.out.print(STOCK);
         for (int i=0;i<stocks.length;i++)
             System.out.println(i + " \t" + stocks[i].getName() + "\t" +
                 stocks[i].getPrice() + "\t" + stocks[i].getRate());
-        System.out.print(BUY_STOCK);
+        System.out.print(BUY_OR_SELL);
         Scanner sc = new Scanner(System.in);
         String option = sc.next();
 
         if (option.equals("x"))
             return;
 
-        try {
-            int index = Integer.parseInt(option);
-            if (index >=0 && index < stocks.length) {
-                System.out.print(STOCK_NUMBER);
-                sc = new Scanner(System.in);
-                int number = sc.nextInt();
-                if (number >= 0) {
-                    if (player.getCash() >= number * stocks[index].getPrice()) {
+        if (option.equals("y")) {
+            System.out.print(BUY_STOCK);
+            sc = new Scanner(System.in);
+            option = sc.next();
 
+            if (option.equals("x"))
+                return;
+
+            try {
+                int index = Integer.parseInt(option);
+                if (index >=0 && index < stocks.length) {
+                    System.out.printf(STOCK_NUMBER, "买");
+                    sc = new Scanner(System.in);
+                    int number = sc.nextInt();
+                    if (number >= 0) {
+                        int sum = (int)(number * stocks[index].getPrice());
+                        if (player.getCash() >= sum) {
+                            player.addCash(-sum);
+                            player.addStock(index, number);
+                            System.out.print(BUY_SUCCESSFULLY);
+                        } else if (player.getCash() + player.getDeposit() >= sum) {
+                            player.setCash(0);
+                            player.addDeposit(player.getCash() - sum);
+                            player.addStock(index, number);
+                            System.out.print(BUY_SUCCESSFULLY);
+                        }
+                        else
+                            System.out.print(NO_CASH);
                     } else
-                        System.out.print(NO_CASH);
+                        System.out.print(WARNING);
                 } else
                     System.out.print(WARNING);
-            } else
+            } catch (NumberFormatException e) {
                 System.out.print(WARNING);
-        } catch (NumberFormatException e) {
+            }
+        } else if (option.equals("n")) {
+            System.out.print(YOUR_STOCK);
+            for (int i=0;i<stocks.length;i++)
+            System.out.println(i + " \t" + stocks[i].getName() + "\t" +
+                    stocks[i].getPrice() + "\t" + stocks[i].getRate() + "\t" + player.getStock(i));
+            System.out.print(SELL_STOCK);
+            sc = new Scanner(System.in);
+            option = sc.next();
+
+            if (option.equals("x"))
+                return;
+
+            try {
+                int index = Integer.parseInt(option);
+                if (index >=0 && index < stocks.length && player.getStock(index) != 0) {
+                    System.out.printf(STOCK_NUMBER, "卖");
+                    sc = new Scanner(System.in);
+                    int number = sc.nextInt();
+                    if (number >= 0 && number <= player.getStock(index)) {
+                        int sum = (int)(number * stocks[index].getPrice());
+                        player.addStock(index, -number);
+                        player.addCash(sum);
+                        System.out.print(SELL_SUCCESSFULLY);
+                    } else
+                        System.out.print(NO_STOCK);
+                } else
+                    System.out.print(WARNING);
+            } catch (NumberFormatException e) {
+                System.out.print(WARNING);
+            }
+        } else
             System.out.print(WARNING);
-        }
     }
 }

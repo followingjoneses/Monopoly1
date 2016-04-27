@@ -16,6 +16,7 @@ public class Player implements Visualizable{
     private String name;
     private ArrayList<ArrayList<Item>> items;
     private ArrayList<Land> lands;
+    private int[] stock;
 
     public Player(int number) {
         items = new ArrayList<>();
@@ -27,7 +28,7 @@ public class Player implements Visualizable{
         this.number = number;
         isClockWise = true;
         cash = 2000;
-
+        stock = new int[10];
     }
 
     public int getCash() {
@@ -170,6 +171,14 @@ public class Player implements Visualizable{
                     item.add(new BlackCard());
                 break;
         }
+    }
+
+    public void addStock(int index, int number) {
+        stock[index] += number;
+    }
+
+    public int getStock(int index) {
+        return stock[index];
     }
 
     public void addLand(Land land) {
