@@ -30,6 +30,7 @@ public class Menu {
         NO_BARRIER = "前方10步无路障\n",
         PLAYERS_INFO = "昵称\t现金\t存款\t房产\t\n",
         DICE = "你掷出了%d\n",
+        TRAPPED = "你碰到了路障!\n",
         GIVE_UP = "玩家%s认输了!\n",
         STOCK = "编号\t名称\t\t单股价格\t涨幅/跌幅\n",
         YOUR_STOCK = "编号\t名称\t\t单股价格\t涨幅/跌幅\t股数\n",
@@ -194,6 +195,18 @@ public class Menu {
         }
         System.out.printf(DICE, dice);
         map.getCell(Map.COORDINATE[player.getLocation()][0], Map.COORDINATE[player.getLocation()][1]).dismissView(player);
+        for (int i=0;i<dice;i++) {
+            Serving serving =
+                map.getCell(Map.COORDINATE[player.getLocation() + i][0], Map.COORDINATE[player.getLocation() + i][1]).getServing();
+            if (serving.isHasBarrier()) {
+                dice = i;
+                System.out.print(TRAPPED);
+                serving.removeBarrier();
+                break;
+            } else if (serving instanceof Bank) {
+                serving.serve(players, currentPlayer, map);
+            }
+        }
         player.addLocation(dice);
 
         Cell curCell = map.getCell(Map.COORDINATE[player.getLocation()][0], Map.COORDINATE[player.getLocation()][1]);

@@ -11,7 +11,7 @@ import java.text.*;
 public class Game {
     private static final String NAME_INPUT = "请输入玩家%d的名字:\n",
         GAME_START = "游戏开始\n";
-    private static final int MAX_PLAYER = 4,
+    private static final int MAX_PLAYER = 2,
         MIN_STOCK = 10;
     private static final String[] STOCK_NAME =
             {"Nike", "Oracle", "Apple", "Citi", "Fort",
