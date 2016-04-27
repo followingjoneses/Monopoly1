@@ -11,17 +11,6 @@ import java.util.*;
 public class Map {
     public static final int MAP_LENGTH = 60;
     static final int MAP_HEIGHT = 10, MAP_WIDTH = 22;
-//    public static final String INITIAL_MAP =
-//            "◎◎◎◎◎◎◎新◎◎◎◎银◎◎◎◎◎券券◎◎\n"+
-//            "彩　　　　　　　　　　　　　　　　　　　　◎\n"+
-//            "◎　　　　　　　　　　　　　　　　　　　　◎\n"+
-//            "◎　　　　　　　　　　　　　　　　　　　　◎\n"+
-//            "◎　　　　　　　　　　　　　　　　　　　　道\n"+
-//            "◎　　　　　　　　　　　　　　　　　　　　◎\n"+
-//            "空　　　　　　　　　　　　　　　　　　　　◎\n"+
-//            "卡　　　　　　　　　　　　　　　　　　　　◎\n"+
-//            "券　　　　　　　　　　　　　　　　　　　　◎\n"+
-//            "券券券券券券券券券券券券券券券券券券券券券券\n";
     static final char[][] INITIAL_MAP = {
         {'◎', '◎', '◎', '◎', '◎', '◎', '◎', '新', '◎', '◎', '◎', '◎', '银', '◎', '◎', '◎', '◎', '◎', '券', '券', '◎', '◎'},
         {'彩', '　', '　',  '　',  '　',  '　',  '　',  '　',  '　',  '　',  '　',  '　',  '　',  '　',  '　',  '　',  '　',  '　',  '　',  '　',  '　', '◎'},
