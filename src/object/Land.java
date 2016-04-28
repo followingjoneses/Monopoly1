@@ -75,7 +75,8 @@ public class Land extends Serving implements Visualizable {
         String landOwner = (owner == -1) ? "无主" : "主人是"+ players.get(owner).getName();
 
         System.out.println(landOwner);
-        System.out.println(level + "级");
+        System.out.println("初始价格:"+price);
+        System.out.println("等级:"+level + "级");
 
     }
 

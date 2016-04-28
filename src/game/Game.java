@@ -9,15 +9,19 @@ import java.text.*;
  * Created by jzl on 16/4/2.
  */
 public class Game {
-    private static final String NAME_INPUT = "请输入玩家%d的名字:\n",
+    private static final String PLAYER_NUMBER = "请设置玩家数量(2-4):\n",
+        NAME_INPUT = "请输入玩家%d的名字:\n",
+        SET_LIFETIME = "请设置游戏时间(天数):\n",
         GAME_START = "游戏开始\n",
-        GAME_OVER = "玩家%s获胜!\n";
-    private static final int MAX_PLAYER = 2,
+        GAME_OVER = "玩家%s获胜!\n",
+        WARNING = "请输入符合要求的字符\n";
+    private static final int MAX_PLAYER = 4,
         MIN_STOCK = 10;
     private static final String[] STOCK_NAME =
             {"Nike", "Oracle", "Apple", "Citi", "Fort",
                     "Boeing", "Toyota", "Intel", "Yahoo", "Cisco"};
 
+    private int lifetime, day, playerNumber;
     private ArrayList<Player> players;
     private int currentPlayer;
     private Calendar calendar;
@@ -27,8 +31,6 @@ public class Game {
 
     public Game() {
         players = new ArrayList<>();
-        for (int i=0;i<MAX_PLAYER;i++)
-            players.add(new Player(i));
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年M月d日");
         calendar = Calendar.getInstance();
@@ -59,6 +61,24 @@ public class Game {
         calendar.add(Calendar.DATE, 1);
         for (int i=0;i<stocks.length;i++)
             stocks[i].tomorrow();
+        day++;
+    }
+
+    public void setPlayerNumber() {
+        System.out.print(PLAYER_NUMBER);
+        Scanner sc = new Scanner(System.in);
+        try {
+            int number = sc.nextInt();
+            if (number >= 2 && number <= 4)
+                playerNumber = number;
+            else
+                System.out.print(WARNING);
+        } catch (NumberFormatException e) {
+            System.out.print(WARNING);
+        }
+
+        for (int i=0;i<playerNumber;i++)
+            players.add(new Player(i));
     }
 
     public void setPlayerNames() {
@@ -70,11 +90,25 @@ public class Game {
         }
     }
 
+    public void setLifeTime() {
+        System.out.print(SET_LIFETIME);
+        Scanner sc = new Scanner(System.in);
+        try {
+            int day = sc.nextInt();
+            if (day >= 0)
+                lifetime = day;
+            else
+                System.out.print(WARNING);
+        } catch (NumberFormatException e) {
+            System.out.print(WARNING);
+        }
+    }
+
     public void startGame() {
         buildMap();
         System.out.print(GAME_START);
 
-        while (players.size()!=1) {
+        while (players.size()!=1 && day < lifetime) {
             for (int i=0;i<players.size();i++) {
                 int option = -1;
                 while (option != 7 && option != 6)
@@ -84,7 +118,25 @@ public class Game {
             tomorrow();
         }
 
-        System.out.printf(GAME_OVER, players.get(0).getName());
+        String winner;
+        if (players.size() == 1)
+            winner = players.get(0).getName();
+        else {
+            int maxProperty = 0, max = 0;
+            for (int i=0;i<players.size();i++) {
+                Player player = players.get(i);
+                int property = player.getDeposit() + player.getCash() + player.getHouseProperty();
+                if (property > maxProperty) {
+                    maxProperty = property;
+                    max = i;
+                }
+            }
+
+            winner = players.get(max).getName();
+            System.out.println("时间到");
+        }
+
+        System.out.printf(GAME_OVER, winner);
     }
 
     private void buildMap() {
