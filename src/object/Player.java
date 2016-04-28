@@ -27,7 +27,7 @@ public class Player implements Visualizable{
         lands = new ArrayList<>();
         this.number = number;
         isClockWise = true;
-        cash = 2000;
+        cash = 500;
         stock = new int[10];
     }
 

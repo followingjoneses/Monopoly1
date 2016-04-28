@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Created by jzl on 16/4/25.
  */
 public class DividePropertyCard extends Item {
-    private static final String USE = "你使用了转向卡\n";
+    private static final String USE = "你使用了均富卡\n";
 
     public DividePropertyCard() {
         this.itemIndex = 3;

@@ -95,12 +95,13 @@ public class LandService {
                 owner.addCash(fee);
             } else if (player.getCash() + player.getDeposit() + player.getHouseProperty() >= fee) {
                 System.out.print(PAY_SUCCESSFULLY);
-                int delta = fee - player.getCash() - player.getHouseProperty();
+                int delta = fee - player.getCash() - player.getDeposit();
                 for (int i=0;i<player.getLands().size();i++) {
                     Land tempLand = player.getLands().get(0);
                     if (tempLand.getLevel()*tempLand.getPrice()>=delta) {
                         int cash = tempLand.getLevel()*tempLand.getPrice() - delta;
                         player.addCash(cash);
+                        player.addHouseProperty(-tempLand.getLevel()*tempLand.getPrice());
                         player.getLands().remove(tempLand);
                         tempLand.setOwner(-1);
                         tempLand.setLevel(1);

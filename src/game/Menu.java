@@ -44,7 +44,7 @@ public class Menu {
         SELL_SUCCESSFULLY = "售出成功",
         NO_STOCK = "没那么多股\n",
         END_OF_MONTH = "今天是月末,银行发放利息\n";
-    private static final String[] ITEM_NAMES;
+    public static final String[] ITEM_NAMES;
 
     static {
         ITEM_NAMES = new String[7];
