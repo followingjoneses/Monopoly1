@@ -276,13 +276,13 @@ public class Menu {
                     int number = sc.nextInt();
                     if (number >= 0) {
                         int sum = (int)(number * stocks[index].getPrice());
-                        if (player.getCash() >= sum) {
-                            player.addCash(-sum);
+                        if (player.getDeposit() >= sum) {
+                            player.addDeposit(-sum);
                             player.addStock(index, number);
                             System.out.print(BUY_SUCCESSFULLY);
                         } else if (player.getCash() + player.getDeposit() >= sum) {
-                            player.setCash(0);
-                            player.addDeposit(player.getCash() - sum);
+                            player.setDeposit(0);
+                            player.addCash(player.getCash() - sum);
                             player.addStock(index, number);
                             System.out.print(BUY_SUCCESSFULLY);
                         }
