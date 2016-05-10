@@ -35,7 +35,7 @@ public class Game {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年M月d日");
         calendar = Calendar.getInstance();
         try {
-            Date date = simpleDateFormat.parse("2014年1月1日");
+            Date date = simpleDateFormat.parse("2014年1月30日");
             calendar.setTime(date);
         } catch (ParseException e) {
             e.printStackTrace();

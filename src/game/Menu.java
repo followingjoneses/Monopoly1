@@ -41,7 +41,7 @@ public class Menu {
         SELL_STOCK = "请选择你想要卖的股票编号,按x返回上一层:\n",
         BUY_SUCCESSFULLY = "购买成功\n",
         NO_CASH = "现金不足\n",
-        SELL_SUCCESSFULLY = "售出成功",
+        SELL_SUCCESSFULLY = "售出成功\n",
         NO_STOCK = "没那么多股\n",
         END_OF_MONTH = "今天是月末,银行发放利息\n";
     public static final String[] ITEM_NAMES;
@@ -204,8 +204,11 @@ public class Menu {
         System.out.printf(DICE, dice);
         map.getCell(Map.COORDINATE[player.getLocation()][0], Map.COORDINATE[player.getLocation()][1]).dismissView(player);
         for (int i=0;i<dice;i++) {
+            int location =
+                    player.isClockWise() ? (player.getLocation() + i) % Map.MAP_LENGTH
+                            : (player.getLocation() - i + Map.MAP_LENGTH) % Map.MAP_LENGTH;
             Serving serving =
-                map.getCell(Map.COORDINATE[player.getLocation() + i][0], Map.COORDINATE[player.getLocation() + i][1]).getServing();
+                map.getCell(Map.COORDINATE[location][0], Map.COORDINATE[location][1]).getServing();
             if (serving.isHasBarrier()) {
                 dice = i;
                 System.out.print(TRAPPED);
@@ -282,7 +285,7 @@ public class Menu {
                             System.out.print(BUY_SUCCESSFULLY);
                         } else if (player.getCash() + player.getDeposit() >= sum) {
                             player.setDeposit(0);
-                            player.addCash(player.getCash() - sum);
+                            player.addCash(-sum);
                             player.addStock(index, number);
                             System.out.print(BUY_SUCCESSFULLY);
                         }

@@ -28,14 +28,17 @@ public class LotteryHouseService {
             Random random = new Random();
             boolean win = random.nextBoolean();
             Player player = players.get(currentPlayer);
-            player.addCash(-PRICE);
+            if (player.getCash() >= PRICE) {
+                player.addCash(-PRICE);
 
-            if (win) {
-                int money = (int)(Math.random() * 10000);
-                System.out.printf(WIN, money);
-                player.addCash(money);
+                if (win) {
+                    int money = (int)(Math.random() * 10000);
+                    System.out.printf(WIN, money);
+                    player.addCash(money);
+                } else
+                    System.out.print(NOT_WIN);
             } else
-                System.out.print(NOT_WIN);
+                System.out.println("现金不足");
         } else if (option.equals("n"))
             System.out.print(NOT_BUY);
         else
